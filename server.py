@@ -1,10 +1,10 @@
 import json
+import pyotp
 
 class Server:
     def __init__(self):
         with open("users.json") as f:
-            users = json.load(f)
-        self.DB = {u["username"]: u for u in users}
+            self.DB = json.load(f)
     
     def register(self):
         user_name = input("Please choose a username. You'll use this to sign in. ")
@@ -16,19 +16,31 @@ class Server:
         "password": password}
         print("Account created successfully!")
 
-    def login(self):
+    def add_totp(self):
+        for user_name in self.DB:
+            self.DB[user_name] = {
+                "password": self.DB[user_name]["password"],
+                "totp_secret" : None,
+                "totp_enabled": False}
+    
+    def get_username(self):
         user_name = input("Please enter your username. ")
         if user_name not in self.DB:
-            print("Username not found. Please try again or register first.")
-            return
-        password = input("Please enter your password. ")
-        while password != self.DB[user_name]["password"]:
+            raise Exception("Username not found. Please try again or register first.")
+        return user_name
+    
+    def get_password(self):
+        return input("Please enter your password. ")
+    
+    def login(self, username, password):
+        while password != self.DB[username]["password"]:
             print("Password is incorrect. Try again. ")
-            password = input("Please enter your password. ")
+            password = self.get_password()
         print("You're in. Welcome back!\n")
 
     def login_totp(self):
-        pass
+        totp = pyotp.random_base32()
+
     
     def save(self):
         with open("users.json", "w") as f:
@@ -42,7 +54,7 @@ while (True):
     print("Please choose an action:")
     print("1. register")
     print("2. login")
-    print("3. login")
+    print("3. login with totp")
     print("4. exit")
 
     user_input = input()
@@ -52,17 +64,23 @@ while (True):
         print("Invalid input. Please enter a valid number.")
         continue
 
-    match action:
-        case 1:
-            S.register()
-        case 2:
-            S.login()
-        case 3:
-            pass
-        case 4:
-            print("")
-            break
-        case _:  # Default case (wildcard)
-            print("Unknown action, please try again")
+    try:
+        match action:
+            case 1:
+                S.register()
+            case 2:
+                username = S.get_username()
+                S.login()
+            case 3:
+                pass
+            case 4:
+                print("")
+                break
+            case _:  # Default case (wildcard)
+                print("ERROR: Unknown action, please try again")
+    
+    except Exception as e:
+        print("ERROR: ", e)
+
 
 S.save()

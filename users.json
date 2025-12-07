@@ -1,122 +1,152 @@
 {
   "alex": {
-    "username": "alex",
-    "password": "123456"
+    "password": "123456",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "sam": {
-    "username": "sam",
-    "password": "password"
+    "password": "password",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "charlie": {
-    "username": "charlie",
-    "password": "qwerty"
+    "password": "qwerty",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "jordan": {
-    "username": "jordan",
-    "password": "abc123"
+    "password": "abc123",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "taylor": {
-    "username": "taylor",
-    "password": "letmein"
+    "password": "letmein",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "morgan": {
-    "username": "morgan",
-    "password": "0000"
+    "password": "0000",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "chris": {
-    "username": "chris",
-    "password": "111111"
+    "password": "111111",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "jamie": {
-    "username": "jamie",
-    "password": "admin"
+    "password": "admin",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "pat": {
-    "username": "pat",
-    "password": "iloveyou"
+    "password": "iloveyou",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "robin": {
-    "username": "robin",
-    "password": "test123"
+    "password": "test123",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "casey": {
-    "username": "casey",
-    "password": "Sunflower92"
+    "password": "Sunflower92",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "jules": {
-    "username": "jules",
-    "password": "BlueSky2024"
+    "password": "BlueSky2024",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "max": {
-    "username": "max",
-    "password": "GamerBoy55"
+    "password": "GamerBoy55",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "ava": {
-    "username": "ava",
-    "password": "OceanWave11"
+    "password": "OceanWave11",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "lily": {
-    "username": "lily",
-    "password": "TigerCat77"
+    "password": "TigerCat77",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "leo": {
-    "username": "leo",
-    "password": "MusicLover89"
+    "password": "MusicLover89",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "sophie": {
-    "username": "sophie",
-    "password": "CoffeeTime44"
+    "password": "CoffeeTime44",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "mia": {
-    "username": "mia",
-    "password": "WinterSnow12"
+    "password": "WinterSnow12",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "ethan": {
-    "username": "ethan",
-    "password": "SummerVibes33"
+    "password": "SummerVibes33",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "oliver": {
-    "username": "oliver",
-    "password": "HappyDays101"
+    "password": "HappyDays101",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "nina": {
-    "username": "nina",
-    "password": "Gk9!pA42v@L"
+    "password": "Gk9!pA42v@L",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "daniel": {
-    "username": "daniel",
-    "password": "qZ7%Tn48_sD"
+    "password": "qZ7%Tn48_sD",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "user123": {
-    "username": "user123",
-    "password": "4w$L9zB!eR2"
+    "password": "4w$L9zB!eR2",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "sunnyday": {
-    "username": "sunnyday",
-    "password": "Fp#3dQ18!Vr"
+    "password": "Fp#3dQ18!Vr",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "gamer01": {
-    "username": "gamer01",
-    "password": "Mx@91_vT7s*"
+    "password": "Mx@91_vT7s*",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "starrynight": {
-    "username": "starrynight",
-    "password": "7c!PwG4$AfS"
+    "password": "7c!PwG4$AfS",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "midnightwolf": {
-    "username": "midnightwolf",
-    "password": "H*9Zb2_kT#q"
+    "password": "H*9Zb2_kT#q",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "coffee_addict": {
-    "username": "coffee_addict",
-    "password": "dR6!Yt4*$Wm"
+    "password": "dR6!Yt4*$Wm",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "bluebird": {
-    "username": "bluebird",
-    "password": "Zq@3vJ87%Ln"
+    "password": "Zq@3vJ87%Ln",
+    "totp_secret": null,
+    "totp_enabled": false
   },
   "explorer": {
-    "username": "explorer",
-    "password": "tB2$wA91!Rx"
+    "password": "tB2$wA91!Rx",
+    "totp_secret": null,
+    "totp_enabled": false
   }
 }
