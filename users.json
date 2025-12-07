@@ -1,34 +1,122 @@
-[
-  { "username": "alex", "password": "123456" },
-  { "username": "sam", "password": "password" },
-  { "username": "charlie", "password": "qwerty" },
-  { "username": "jordan", "password": "abc123" },
-  { "username": "taylor", "password": "letmein" },
-  { "username": "morgan", "password": "0000" },
-  { "username": "chris", "password": "111111" },
-  { "username": "jamie", "password": "admin" },
-  { "username": "pat", "password": "iloveyou" },
-  { "username": "robin", "password": "test123" },
-
-  { "username": "casey", "password": "Sunflower92" },
-  { "username": "jules", "password": "BlueSky2024" },
-  { "username": "max", "password": "GamerBoy55" },
-  { "username": "ava", "password": "OceanWave11" },
-  { "username": "lily", "password": "TigerCat77" },
-  { "username": "leo", "password": "MusicLover89" },
-  { "username": "sophie", "password": "CoffeeTime44" },
-  { "username": "mia", "password": "WinterSnow12" },
-  { "username": "ethan", "password": "SummerVibes33" },
-  { "username": "oliver", "password": "HappyDays101" },
-
-  { "username": "nina", "password": "Gk9!pA42v@L" },
-  { "username": "daniel", "password": "qZ7%Tn48_sD" },
-  { "username": "user123", "password": "4w$L9zB!eR2" },
-  { "username": "sunnyday", "password": "Fp#3dQ18!Vr" },
-  { "username": "gamer01", "password": "Mx@91_vT7s*" },
-  { "username": "starrynight", "password": "7c!PwG4$AfS" },
-  { "username": "midnightwolf", "password": "H*9Zb2_kT#q" },
-  { "username": "coffee_addict", "password": "dR6!Yt4*$Wm" },
-  { "username": "bluebird", "password": "Zq@3vJ87%Ln" },
-  { "username": "explorer", "password": "tB2$wA91!Rx" }
-]
+{
+  "alex": {
+    "username": "alex",
+    "password": "123456"
+  },
+  "sam": {
+    "username": "sam",
+    "password": "password"
+  },
+  "charlie": {
+    "username": "charlie",
+    "password": "qwerty"
+  },
+  "jordan": {
+    "username": "jordan",
+    "password": "abc123"
+  },
+  "taylor": {
+    "username": "taylor",
+    "password": "letmein"
+  },
+  "morgan": {
+    "username": "morgan",
+    "password": "0000"
+  },
+  "chris": {
+    "username": "chris",
+    "password": "111111"
+  },
+  "jamie": {
+    "username": "jamie",
+    "password": "admin"
+  },
+  "pat": {
+    "username": "pat",
+    "password": "iloveyou"
+  },
+  "robin": {
+    "username": "robin",
+    "password": "test123"
+  },
+  "casey": {
+    "username": "casey",
+    "password": "Sunflower92"
+  },
+  "jules": {
+    "username": "jules",
+    "password": "BlueSky2024"
+  },
+  "max": {
+    "username": "max",
+    "password": "GamerBoy55"
+  },
+  "ava": {
+    "username": "ava",
+    "password": "OceanWave11"
+  },
+  "lily": {
+    "username": "lily",
+    "password": "TigerCat77"
+  },
+  "leo": {
+    "username": "leo",
+    "password": "MusicLover89"
+  },
+  "sophie": {
+    "username": "sophie",
+    "password": "CoffeeTime44"
+  },
+  "mia": {
+    "username": "mia",
+    "password": "WinterSnow12"
+  },
+  "ethan": {
+    "username": "ethan",
+    "password": "SummerVibes33"
+  },
+  "oliver": {
+    "username": "oliver",
+    "password": "HappyDays101"
+  },
+  "nina": {
+    "username": "nina",
+    "password": "Gk9!pA42v@L"
+  },
+  "daniel": {
+    "username": "daniel",
+    "password": "qZ7%Tn48_sD"
+  },
+  "user123": {
+    "username": "user123",
+    "password": "4w$L9zB!eR2"
+  },
+  "sunnyday": {
+    "username": "sunnyday",
+    "password": "Fp#3dQ18!Vr"
+  },
+  "gamer01": {
+    "username": "gamer01",
+    "password": "Mx@91_vT7s*"
+  },
+  "starrynight": {
+    "username": "starrynight",
+    "password": "7c!PwG4$AfS"
+  },
+  "midnightwolf": {
+    "username": "midnightwolf",
+    "password": "H*9Zb2_kT#q"
+  },
+  "coffee_addict": {
+    "username": "coffee_addict",
+    "password": "dR6!Yt4*$Wm"
+  },
+  "bluebird": {
+    "username": "bluebird",
+    "password": "Zq@3vJ87%Ln"
+  },
+  "explorer": {
+    "username": "explorer",
+    "password": "tB2$wA91!Rx"
+  }
+}
