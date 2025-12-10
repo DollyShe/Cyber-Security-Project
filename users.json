@@ -1,8 +1,8 @@
 {
   "alex": {
     "password": "123456",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "NONHWW5Y5UEC35TBYWMQIRHIUEGWGWNR",
+    "totp_enabled": true
   },
   "sam": {
     "password": "password",
@@ -21,8 +21,8 @@
   },
   "taylor": {
     "password": "letmein",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "PGISTFIWIDYG7KS3DOD4ZCCKFNRU56JO",
+    "totp_enabled": true
   },
   "morgan": {
     "password": "0000",
@@ -56,8 +56,8 @@
   },
   "jules": {
     "password": "BlueSky2024",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "2WFL365ZF4NXGJZOYB2HJPQFCB5A4TY3",
+    "totp_enabled": true
   },
   "max": {
     "password": "GamerBoy55",
@@ -81,8 +81,8 @@
   },
   "sophie": {
     "password": "CoffeeTime44",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "3TZAKVSCJV2C5VXVIW4APKX3OL2T2ZB6",
+    "totp_enabled": true
   },
   "mia": {
     "password": "WinterSnow12",
@@ -121,8 +121,8 @@
   },
   "gamer01": {
     "password": "Mx@9fssgf21_vT7s*",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "ENYUVXJ3ARHK7GWU64UCEC73MFBOYCO4",
+    "totp_enabled": true
   },
   "starrynight": {
     "password": "7c!Pwfsrgfd4G4$AfS",
@@ -141,8 +141,8 @@
   },
   "bluebird": {
     "password": "Zq@3vJfgdss5587%Ln",
-    "totp_secret": null,
-    "totp_enabled": false
+    "totp_secret": "HKFZ7NBQOGCZS3ISCIU6Y2IKYHJXU3TS",
+    "totp_enabled": true
   },
   "explorer": {
     "password": "tB2$wcdbf45A91!Rx",
