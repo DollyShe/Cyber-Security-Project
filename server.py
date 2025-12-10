@@ -1,5 +1,6 @@
 import json
 import pyotp
+import time
 
 class Server:
     def __init__(self):
@@ -17,11 +18,20 @@ class Server:
         print("Account created successfully!")
 
     def add_totp(self):
-        for user_name in self.DB:
-            self.DB[user_name] = {
-                "password": self.DB[user_name]["password"],
-                "totp_secret" : None,
-                "totp_enabled": False}
+        self.DB["alex"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["alex"]["totp_enabled"] = True
+        self.DB["taylor"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["taylor"]["totp_enabled"] = True
+
+        self.DB["jules"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["jules"]["totp_enabled"] = True
+        self.DB["sophie"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["sophie"]["totp_enabled"] = True
+
+        self.DB["gamer01"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["gamer01"]["totp_enabled"] = True
+        self.DB["bluebird"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["bluebird"]["totp_enabled"] = True
     
     def get_username(self):
         user_name = input("Please enter your username. ")
@@ -38,14 +48,21 @@ class Server:
             password = self.get_password()
         print("You're in. Welcome back!\n")
 
-    def login_totp(self):
-        totp = pyotp.random_base32()
+    def login_totp(self, username):
+        totp = pyotp.TOTP(self.DB[username]["totp_secret"])
+        duration = 30  # seconds
+        start = time.time()
+        totp_from_user = input("Please enter the TOTP you received: ")
+        while time.time() - start < duration and totp != totp_from_user:
+            totp_from_user = input("Wrong TOTP! Please try again: ")
+        if totp != totp_from_user:
+            print("login with TOTP failed.")
+        else:
+            print("You're in. Welcome back!\n")
 
-    
     def save(self):
         with open("users.json", "w") as f:
             json.dump(self.DB, f, indent=2)
-
 
 S = Server()
 print("Welcome to the server.")

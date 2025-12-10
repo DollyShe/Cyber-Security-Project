@@ -1,16 +1,16 @@
 import pyotp
 
 class Authorized_user:
-    def __init__(self, username : str, password : str, enable_totp : bool):
+    def __init__(self, username : str, password : str, totp_secret : str, enable_totp : bool):
         self.username = username
         self.password = password
+        self.totp_secret = totp_secret
         self.totp_enabled = enable_totp
-        if enable_totp:
-            self.totp = pyotp.random_base32()
-        self.totp = None
     
-    def add_totp(self):
-        self.totp = None
+    def get_totp(self):
+        if not self.totp_enabled or not self.totp_secret:
+            return None
+        return pyotp.TOTP(self.totp_secret)
 
 
 class Unauthorized_user:
