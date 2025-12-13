@@ -59,19 +59,17 @@ class Attempt:
             return
         logging.warning(f"[FAIL] LOGIN_FAILED user={random_username}")
     
-    def brute_force(self):
-        # get 10 random usernames
-        usernames = random.sample(list(self.DB.keys()), 10)
+    def brute_force(self, username):
         with open("BF_passwords.txt", "r") as file:
             lines = file.readlines()
         passwords = [line.strip() for line in lines]
-        for username in usernames:
-            for password in passwords:
-                logging.info(f"user {username} is trying to login with the password: {password}")
-                if self.server.login(username, password):
-                    logging.info("login succeeded for unauthorized user! via Brute Force.")
-                    return
-        logging.warning("login failed for unauthorized user via Brute Force.")
+        for password in passwords:
+            logging.info(f"-> LOGIN_ATTEMPT user={username}")
+            if self.server.login(username, password) == LoginResult.OK:
+                logging.info(f"[OK] LOGIN_SUCCESS user={username}")
+                return
+            logging.warning(f"[FAIL] LOGIN_FAILED user={username}")
+        
     
     def password_spraying(self):
         with open("PS_passwords.txt", "r") as file:
@@ -81,8 +79,13 @@ class Attempt:
             for password in passwords:
                 logging.info(f"-> LOGIN_ATTEMPT user={username}")
                 if self.server.login(username, password):
+                    if self.DB[username]["totp_enabled"]:
+                        code = f"{secrets.randbelow(1_000_000):06d}"
+                        logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={username}")
+                        while self.server.login_totp(username, code) != LoginResult.TOTP_TIMEOUT:
+                            code = f"{secrets.randbelow(1_000_000):06d}"
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
-                    return
+                    break
                 logging.warning(f"[FAIL] LOGIN_FAILED user={username}")
         # logging.warning("login failed for unauthorized user via Password Spraying.")
 
@@ -99,4 +102,6 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 
 a = Attempt()
-a.password_spraying()
+# a.password_spraying()
+a.brute_force("sunnyday")
+# a.brute_force("morgan")
