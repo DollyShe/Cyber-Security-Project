@@ -7,18 +7,13 @@ class Authorized_user:
         self.totp_secret = totp_secret
         self.totp_enabled = enable_totp
     
-    def get_totp(self):
+    def get_totp_code(self):
         if not self.totp_enabled or not self.totp_secret:
             return None
-        return pyotp.TOTP(self.totp_secret)
+        totp = pyotp.TOTP(self.totp_secret)
+        return totp.now()
 
 
 class Unauthorized_user:
-    def __init__(self, username : str):
-        self.username = username
-    
-    def brute_force(self):
-        pass
-
-    def password_spraying(self):
-        pass
+    def __init__(self, usernames : list):
+        self.list_of_usernames = usernames

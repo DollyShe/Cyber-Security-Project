@@ -1,6 +1,5 @@
 import json
 import pyotp
-import time
 
 class Server:
     def __init__(self):
@@ -42,62 +41,59 @@ class Server:
     def get_password(self):
         return input("Please enter your password. ")
     
-    def login(self, username, password):
+    def login(self, username, password) -> bool:
         while password != self.DB[username]["password"]:
-            print("Password is incorrect. Try again. ")
-            password = self.get_password()
-        print("You're in. Welcome back!\n")
+            return False
+        return True
 
-    def login_totp(self, username):
+    def login_totp(self, username, code) -> bool:
+        if not self.DB[username]["totp_enabled"] or not self.DB[username]["totp_secret"]:
+            print("ERROR: TOTP not enabled for this user\n")
+            return False
         totp = pyotp.TOTP(self.DB[username]["totp_secret"])
-        duration = 30  # seconds
-        start = time.time()
-        totp_from_user = input("Please enter the TOTP you received: ")
-        while time.time() - start < duration and totp != totp_from_user:
-            totp_from_user = input("Wrong TOTP! Please try again: ")
-        if totp != totp_from_user:
-            print("login with TOTP failed.")
-        else:
-            print("You're in. Welcome back!\n")
+        print(f"Please enter the TOTP you received: {code}")
+        if totp.verify(code):
+            return True
+        return False
 
     def save(self):
         with open("users.json", "w") as f:
             json.dump(self.DB, f, indent=2)
 
-S = Server()
-print("Welcome to the server.")
-while (True):
+# S = Server()
+# print("Welcome to the server.")
+# while (True):
     
-    print("Please choose an action:")
-    print("1. register")
-    print("2. login")
-    print("3. login with totp")
-    print("4. exit")
+#     print("Please choose an action:")
+#     print("1. register")
+#     print("2. login")
+#     print("3. login with totp")
+#     print("4. exit")
 
-    user_input = input()
-    try:
-        action = int(user_input)
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-        continue
+#     user_input = input()
+#     try:
+#         action = int(user_input)
+#     except ValueError:
+#         print("Invalid input. Please enter a valid number.")
+#         continue
 
-    try:
-        match action:
-            case 1:
-                S.register()
-            case 2:
-                username = S.get_username()
-                S.login()
-            case 3:
-                pass
-            case 4:
-                print("")
-                break
-            case _:  # Default case (wildcard)
-                print("ERROR: Unknown action, please try again")
+#     try:
+#         match action:
+#             case 1:
+#                 S.register()
+#             case 2:
+#                 username = S.get_username()
+#                 S.login()
+#             case 3:
+#                 pass
+#             case 4:
+#                 print("")
+#                 break
+#             case _:  # Default case (wildcard)
+#                 print("ERROR: Unknown action, please try again")
     
-    except Exception as e:
-        print("ERROR: ", e)
+#     except Exception as e:
+#         print("ERROR: ", e)
 
 
-S.save()
+# S.save()
