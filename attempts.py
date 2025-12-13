@@ -2,6 +2,7 @@ from server import *
 from user import *
 import random
 import logging
+import secrets
 
 GROUP_SEED = 526338897
 
@@ -31,17 +32,32 @@ class Attempt:
         random_username = random.choice(list(self.DB.keys()))
         # random_username = "alex"
         password = self.DB[random_username]["password"]
-        logging.info(f"user {random_username} is trying to login with the password: {password}")
-        self.server.login(random_username, password)
-        if self.DB[random_username]["totp_enabled"]:
-            logging.info(f"user {random_username} is requested to input the TOTP code")
-            if not self.server.login_totp(random_username, self.authorized_users[random_username].get_totp_code()):
-                logging.error("login with TOTP failed with authorized user!")
-                return
-        logging.info("login succeeded")
+        logging.info(f"-> LOGIN_ATTEMPT user={random_username}")
+        if self.server.login(random_username, password):
+            if self.DB[random_username]["totp_enabled"]:
+                code = self.authorized_users[random_username].get_totp_code()
+                logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={random_username}")
+                if not self.server.login_totp(random_username, code):
+                    logging.error(f"[FAIL] LOGIN_FAILED user={random_username} even though he's an authorized user!")
+                    return
+            logging.info(f"[OK] LOGIN_SUCCESS user={random_username}")
+            return
+        logging.warning(f"[FAIL] LOGIN_FAILED user={random_username}")
     
     def random_unauthorized_user_attempt(self):
-        pass
+        random_username = random.choice(list(self.DB.keys()))
+        password = random.choice(list(passwords))
+        logging.info(f"-> LOGIN_ATTEMPT user={random_username}")
+        if self.server.login(random_username, password):
+            if self.DB[random_username]["totp_enabled"]:
+                code = f"{secrets.randbelow(1_000_000):06d}"
+                logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={random_username}")
+                if not self.server.login_totp(random_username, code):
+                    logging.error(f"[FAIL] LOGIN_FAILED user={random_username} and he's an unauthorized user :)")
+                    return
+            logging.info(f"[OK] LOGIN_SUCCESS user={random_username}")
+            return
+        logging.warning(f"[FAIL] LOGIN_FAILED user={random_username}")
     
     def brute_force(self):
         # get 10 random usernames
@@ -55,19 +71,32 @@ class Attempt:
                 if self.server.login(username, password):
                     logging.info("login succeeded for unauthorized user! via Brute Force.")
                     return
-        logging.info("login failed for unauthorized user via Brute Force.")
+        logging.warning("login failed for unauthorized user via Brute Force.")
     
-    def password_spraying(self, username):
+    def password_spraying(self):
         with open("PS_passwords.txt", "r") as file:
             lines = file.readlines()
         passwords = [line.strip() for line in lines]
         for username in self.unauthorized_user.list_of_usernames:
             for password in passwords:
+                logging.info(f"-> LOGIN_ATTEMPT user={username}")
                 if self.server.login(username, password):
-                    logging.info("login succeeded for unauthorized user! via Password Spraying.")
+                    logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                     return
-        logging.info("login failed for unauthorized user via Password Spraying.")
+                logging.warning(f"[FAIL] LOGIN_FAILED user={username}")
+        # logging.warning("login failed for unauthorized user via Password Spraying.")
 
-            
+
+# with open("BF_passwords.txt", "r") as file:
+#     lines = file.readlines()
+# passwords = [line.strip() for line in lines]        
+# a = Attempt()
+# for i in range(0,10):
+#     a.random_authorized_user_attempt()
+#     a.random_authorized_user_attempt()
+#     a.random_unauthorized_user_attempt()
+#     a.random_unauthorized_user_attempt()
+#     a.random_unauthorized_user_attempt()
+
 a = Attempt()
-a.random_authorized_user_attempt()
+a.password_spraying()

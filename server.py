@@ -42,6 +42,8 @@ class Server:
         return input("Please enter your password. ")
     
     def login(self, username, password) -> bool:
+        if username not in self.DB:
+            return False
         while password != self.DB[username]["password"]:
             return False
         return True
