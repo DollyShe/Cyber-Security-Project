@@ -1,109 +1,103 @@
-2025-12-13 19:03:59,532 [INFO] Program started - 526338897
-2025-12-13 19:03:59,533 [INFO] user casey is trying to login with the password: Sunflower92
-2025-12-13 19:03:59,533 [INFO] user casey successfully logged in
-2025-12-13 19:03:59,533 [INFO] user ethan is trying to login with the password: SummerVibes33
-2025-12-13 19:03:59,533 [INFO] user ethan successfully logged in
-2025-12-13 19:03:59,534 [INFO] user bluebird is trying to login with the password: adam1234
-2025-12-13 19:03:59,534 [INFO] user bluebird failed to login
-2025-12-13 19:03:59,534 [INFO] user morgan is trying to login with the password: enough
-2025-12-13 19:03:59,534 [INFO] user morgan failed to login
-2025-12-13 19:03:59,534 [INFO] user sophie is trying to login with the password: joan
-2025-12-13 19:03:59,534 [INFO] user sophie failed to login
-2025-12-13 19:03:59,534 [INFO] user max is trying to login with the password: GamerBoy55
-2025-12-13 19:03:59,534 [INFO] user max successfully logged in
-2025-12-13 19:03:59,534 [INFO] user leo is trying to login with the password: MusicLover89
-2025-12-13 19:03:59,535 [INFO] user leo successfully logged in
-2025-12-13 19:03:59,535 [INFO] user jules is trying to login with the password: 09021983
-2025-12-13 19:03:59,535 [INFO] user jules failed to login
-2025-12-13 19:03:59,535 [INFO] user starrynight is trying to login with the password: lokiloki
-2025-12-13 19:03:59,535 [INFO] user starrynight failed to login
-2025-12-13 19:03:59,535 [INFO] user midnightwolf is trying to login with the password: salesman
-2025-12-13 19:03:59,535 [INFO] user midnightwolf failed to login
-2025-12-13 19:03:59,535 [INFO] user gamer01 is trying to login with the password: Mx@9fssgf21_vT7s*
-2025-12-13 19:03:59,535 [INFO] user gamer01 is has entered the following TOTP code: 707459
-2025-12-13 19:03:59,536 [INFO] user gamer01 successfully logged in
-2025-12-13 19:03:59,536 [INFO] user sophie is trying to login with the password: CoffeeTime44
-2025-12-13 19:03:59,536 [INFO] user sophie is has entered the following TOTP code: 232790
-2025-12-13 19:03:59,537 [INFO] user sophie successfully logged in
-2025-12-13 19:03:59,537 [INFO] user charlie is trying to login with the password: basketbal
-2025-12-13 19:03:59,537 [INFO] user charlie failed to login
-2025-12-13 19:03:59,537 [INFO] user leo is trying to login with the password: fucklove
-2025-12-13 19:03:59,538 [INFO] user leo failed to login
-2025-12-13 19:03:59,538 [INFO] user charlie is trying to login with the password: Tigers1
-2025-12-13 19:03:59,538 [INFO] user charlie failed to login
-2025-12-13 19:03:59,538 [INFO] user ava is trying to login with the password: OceanWave11
-2025-12-13 19:03:59,538 [INFO] user ava successfully logged in
-2025-12-13 19:03:59,538 [INFO] user jamie is trying to login with the password: admin
-2025-12-13 19:03:59,539 [INFO] user jamie successfully logged in
-2025-12-13 19:03:59,539 [INFO] user bluebird is trying to login with the password: season
-2025-12-13 19:03:59,539 [INFO] user bluebird failed to login
-2025-12-13 19:03:59,539 [INFO] user sophie is trying to login with the password: theedge
-2025-12-13 19:03:59,539 [INFO] user sophie failed to login
-2025-12-13 19:03:59,540 [INFO] user alex is trying to login with the password: 07031989
-2025-12-13 19:03:59,540 [INFO] user alex failed to login
-2025-12-13 19:03:59,540 [INFO] user alex is trying to login with the password: 123456
-2025-12-13 19:03:59,540 [INFO] user alex is has entered the following TOTP code: 582905
-2025-12-13 19:03:59,540 [INFO] user alex successfully logged in
-2025-12-13 19:03:59,540 [INFO] user casey is trying to login with the password: Sunflower92
-2025-12-13 19:03:59,540 [INFO] user casey successfully logged in
-2025-12-13 19:03:59,541 [INFO] user starrynight is trying to login with the password: aabbcc
-2025-12-13 19:03:59,541 [INFO] user starrynight failed to login
-2025-12-13 19:03:59,541 [INFO] user user123 is trying to login with the password: Front242
-2025-12-13 19:03:59,541 [INFO] user user123 failed to login
-2025-12-13 19:03:59,541 [INFO] user mia is trying to login with the password: magdalen
-2025-12-13 19:03:59,541 [INFO] user mia failed to login
-2025-12-13 19:03:59,541 [INFO] user jamie is trying to login with the password: admin
-2025-12-13 19:03:59,542 [INFO] user jamie successfully logged in
-2025-12-13 19:03:59,542 [INFO] user taylor is trying to login with the password: letmein
-2025-12-13 19:03:59,542 [INFO] user taylor is has entered the following TOTP code: 501322
-2025-12-13 19:03:59,542 [INFO] user taylor successfully logged in
-2025-12-13 19:03:59,542 [INFO] user sam is trying to login with the password: shitter
-2025-12-13 19:03:59,543 [INFO] user sam failed to login
-2025-12-13 19:03:59,543 [INFO] user mia is trying to login with the password: goldfinger
-2025-12-13 19:03:59,543 [INFO] user mia failed to login
-2025-12-13 19:03:59,543 [INFO] user sunnyday is trying to login with the password: carly1
-2025-12-13 19:03:59,544 [INFO] user sunnyday failed to login
-2025-12-13 19:03:59,544 [INFO] user midnightwolf is trying to login with the password: H*9Zfsfsdg5b2_kT#q
-2025-12-13 19:03:59,544 [INFO] user midnightwolf successfully logged in
-2025-12-13 19:03:59,544 [INFO] user user123 is trying to login with the password: 4w$L9ddgfdf4zB!eR2
-2025-12-13 19:03:59,544 [INFO] user user123 successfully logged in
-2025-12-13 19:03:59,545 [INFO] user mia is trying to login with the password: rocky1
-2025-12-13 19:03:59,545 [INFO] user mia failed to login
-2025-12-13 19:03:59,545 [INFO] user oliver is trying to login with the password: 050888
-2025-12-13 19:03:59,545 [INFO] user oliver failed to login
-2025-12-13 19:03:59,546 [INFO] user sunnyday is trying to login with the password: next
-2025-12-13 19:03:59,546 [INFO] user sunnyday failed to login
-2025-12-13 19:03:59,546 [INFO] user bluebird is trying to login with the password: Zq@3vJfgdss5587%Ln
-2025-12-13 19:03:59,546 [INFO] user bluebird is has entered the following TOTP code: 634221
-2025-12-13 19:03:59,546 [INFO] user bluebird successfully logged in
-2025-12-13 19:03:59,547 [INFO] user gamer01 is trying to login with the password: Mx@9fssgf21_vT7s*
-2025-12-13 19:03:59,547 [INFO] user gamer01 is has entered the following TOTP code: 707459
-2025-12-13 19:03:59,547 [INFO] user gamer01 successfully logged in
-2025-12-13 19:03:59,547 [INFO] user leo is trying to login with the password: sliver
-2025-12-13 19:03:59,547 [INFO] user leo failed to login
-2025-12-13 19:03:59,548 [INFO] user ethan is trying to login with the password: 140590
-2025-12-13 19:03:59,548 [INFO] user ethan failed to login
-2025-12-13 19:03:59,549 [INFO] user midnightwolf is trying to login with the password: 0422
-2025-12-13 19:03:59,549 [INFO] user midnightwolf failed to login
-2025-12-13 19:03:59,549 [INFO] user taylor is trying to login with the password: letmein
-2025-12-13 19:03:59,549 [INFO] user taylor is has entered the following TOTP code: 501322
-2025-12-13 19:03:59,549 [INFO] user taylor successfully logged in
-2025-12-13 19:03:59,549 [INFO] user jules is trying to login with the password: BlueSky2024
-2025-12-13 19:03:59,550 [INFO] user jules is has entered the following TOTP code: 927419
-2025-12-13 19:03:59,550 [INFO] user jules successfully logged in
-2025-12-13 19:03:59,550 [INFO] user bluebird is trying to login with the password: trance
-2025-12-13 19:03:59,550 [INFO] user bluebird failed to login
-2025-12-13 19:03:59,551 [INFO] user casey is trying to login with the password: lammas
-2025-12-13 19:03:59,551 [INFO] user casey failed to login
-2025-12-13 19:03:59,551 [INFO] user nina is trying to login with the password: ponder
-2025-12-13 19:03:59,551 [INFO] user nina failed to login
-2025-12-13 19:03:59,551 [INFO] user chris is trying to login with the password: 111111
-2025-12-13 19:03:59,551 [INFO] user chris successfully logged in
-2025-12-13 19:03:59,552 [INFO] user oliver is trying to login with the password: HappyDays101
-2025-12-13 19:03:59,552 [INFO] user oliver successfully logged in
-2025-12-13 19:03:59,552 [INFO] user ava is trying to login with the password: bigdad
-2025-12-13 19:03:59,552 [INFO] user ava failed to login
-2025-12-13 19:03:59,552 [INFO] user sam is trying to login with the password: wally1
-2025-12-13 19:03:59,553 [INFO] user sam failed to login
-2025-12-13 19:03:59,553 [INFO] user oliver is trying to login with the password: gfedcba
-2025-12-13 19:03:59,553 [INFO] user oliver failed to login
+2025-12-13 19:17:41,091 [INFO] Program started - 526338897
+2025-12-13 19:17:41,091 [INFO] -> LOGIN_ATTEMPT user=chris
+2025-12-13 19:17:41,091 [INFO] [OK] LOGIN_SUCCESS user=chris
+2025-12-13 19:17:41,091 [INFO] -> LOGIN_ATTEMPT user=pat
+2025-12-13 19:17:41,091 [INFO] [OK] LOGIN_SUCCESS user=pat
+2025-12-13 19:17:41,092 [INFO] -> LOGIN_ATTEMPT user=starrynight
+2025-12-13 19:17:41,092 [WARNING] [FAIL] LOGIN_FAILED user=starrynight
+2025-12-13 19:17:41,092 [INFO] -> LOGIN_ATTEMPT user=daniel
+2025-12-13 19:17:41,092 [WARNING] [FAIL] LOGIN_FAILED user=daniel
+2025-12-13 19:17:41,092 [INFO] -> LOGIN_ATTEMPT user=jordan
+2025-12-13 19:17:41,092 [WARNING] [FAIL] LOGIN_FAILED user=jordan
+2025-12-13 19:17:41,092 [INFO] -> LOGIN_ATTEMPT user=sam
+2025-12-13 19:17:41,125 [INFO] [OK] LOGIN_SUCCESS user=sam
+2025-12-13 19:17:41,125 [INFO] -> LOGIN_ATTEMPT user=max
+2025-12-13 19:17:41,125 [INFO] [OK] LOGIN_SUCCESS user=max
+2025-12-13 19:17:41,125 [INFO] -> LOGIN_ATTEMPT user=charlie
+2025-12-13 19:17:41,125 [WARNING] [FAIL] LOGIN_FAILED user=charlie
+2025-12-13 19:17:41,125 [INFO] -> LOGIN_ATTEMPT user=oliver
+2025-12-13 19:17:41,125 [WARNING] [FAIL] LOGIN_FAILED user=oliver
+2025-12-13 19:17:41,126 [INFO] -> LOGIN_ATTEMPT user=starrynight
+2025-12-13 19:17:41,126 [WARNING] [FAIL] LOGIN_FAILED user=starrynight
+2025-12-13 19:17:41,126 [INFO] -> LOGIN_ATTEMPT user=starrynight
+2025-12-13 19:17:41,126 [INFO] [OK] LOGIN_SUCCESS user=starrynight
+2025-12-13 19:17:41,126 [INFO] -> LOGIN_ATTEMPT user=chris
+2025-12-13 19:17:41,126 [INFO] [OK] LOGIN_SUCCESS user=chris
+2025-12-13 19:17:41,126 [INFO] -> LOGIN_ATTEMPT user=bluebird
+2025-12-13 19:17:41,126 [WARNING] [FAIL] LOGIN_FAILED user=bluebird
+2025-12-13 19:17:41,126 [INFO] -> LOGIN_ATTEMPT user=gamer01
+2025-12-13 19:17:41,127 [WARNING] [FAIL] LOGIN_FAILED user=gamer01
+2025-12-13 19:17:41,127 [INFO] -> LOGIN_ATTEMPT user=lily
+2025-12-13 19:17:41,127 [WARNING] [FAIL] LOGIN_FAILED user=lily
+2025-12-13 19:17:41,127 [INFO] -> LOGIN_ATTEMPT user=taylor
+2025-12-13 19:17:41,127 [INFO] -> LOGIN_ATTEMPT_WITH_TOTP user=taylor
+2025-12-13 19:17:41,128 [INFO] [OK] LOGIN_SUCCESS user=taylor
+2025-12-13 19:17:41,128 [INFO] -> LOGIN_ATTEMPT user=lily
+2025-12-13 19:17:41,128 [INFO] [OK] LOGIN_SUCCESS user=lily
+2025-12-13 19:17:41,128 [INFO] -> LOGIN_ATTEMPT user=midnightwolf
+2025-12-13 19:17:41,128 [WARNING] [FAIL] LOGIN_FAILED user=midnightwolf
+2025-12-13 19:17:41,129 [INFO] -> LOGIN_ATTEMPT user=ava
+2025-12-13 19:17:41,129 [WARNING] [FAIL] LOGIN_FAILED user=ava
+2025-12-13 19:17:41,129 [INFO] -> LOGIN_ATTEMPT user=lily
+2025-12-13 19:17:41,129 [WARNING] [FAIL] LOGIN_FAILED user=lily
+2025-12-13 19:17:41,129 [INFO] -> LOGIN_ATTEMPT user=charlie
+2025-12-13 19:17:41,129 [INFO] [OK] LOGIN_SUCCESS user=charlie
+2025-12-13 19:17:41,130 [INFO] -> LOGIN_ATTEMPT user=coffee_addict
+2025-12-13 19:17:41,130 [INFO] [OK] LOGIN_SUCCESS user=coffee_addict
+2025-12-13 19:17:41,130 [INFO] -> LOGIN_ATTEMPT user=sunnyday
+2025-12-13 19:17:41,130 [WARNING] [FAIL] LOGIN_FAILED user=sunnyday
+2025-12-13 19:17:41,130 [INFO] -> LOGIN_ATTEMPT user=bluebird
+2025-12-13 19:17:41,130 [WARNING] [FAIL] LOGIN_FAILED user=bluebird
+2025-12-13 19:17:41,130 [INFO] -> LOGIN_ATTEMPT user=sophie
+2025-12-13 19:17:41,131 [WARNING] [FAIL] LOGIN_FAILED user=sophie
+2025-12-13 19:17:41,131 [INFO] -> LOGIN_ATTEMPT user=mia
+2025-12-13 19:17:41,131 [INFO] [OK] LOGIN_SUCCESS user=mia
+2025-12-13 19:17:41,131 [INFO] -> LOGIN_ATTEMPT user=explorer
+2025-12-13 19:17:41,131 [INFO] [OK] LOGIN_SUCCESS user=explorer
+2025-12-13 19:17:41,131 [INFO] -> LOGIN_ATTEMPT user=user123
+2025-12-13 19:17:41,131 [WARNING] [FAIL] LOGIN_FAILED user=user123
+2025-12-13 19:17:41,131 [INFO] -> LOGIN_ATTEMPT user=lily
+2025-12-13 19:17:41,131 [WARNING] [FAIL] LOGIN_FAILED user=lily
+2025-12-13 19:17:41,131 [INFO] -> LOGIN_ATTEMPT user=jamie
+2025-12-13 19:17:41,132 [WARNING] [FAIL] LOGIN_FAILED user=jamie
+2025-12-13 19:17:41,132 [INFO] -> LOGIN_ATTEMPT user=charlie
+2025-12-13 19:17:41,132 [INFO] [OK] LOGIN_SUCCESS user=charlie
+2025-12-13 19:17:41,132 [INFO] -> LOGIN_ATTEMPT user=max
+2025-12-13 19:17:41,132 [INFO] [OK] LOGIN_SUCCESS user=max
+2025-12-13 19:17:41,132 [INFO] -> LOGIN_ATTEMPT user=sam
+2025-12-13 19:17:41,132 [WARNING] [FAIL] LOGIN_FAILED user=sam
+2025-12-13 19:17:41,132 [INFO] -> LOGIN_ATTEMPT user=midnightwolf
+2025-12-13 19:17:41,132 [WARNING] [FAIL] LOGIN_FAILED user=midnightwolf
+2025-12-13 19:17:41,132 [INFO] -> LOGIN_ATTEMPT user=user123
+2025-12-13 19:17:41,132 [WARNING] [FAIL] LOGIN_FAILED user=user123
+2025-12-13 19:17:41,133 [INFO] -> LOGIN_ATTEMPT user=max
+2025-12-13 19:17:41,133 [INFO] [OK] LOGIN_SUCCESS user=max
+2025-12-13 19:17:41,133 [INFO] -> LOGIN_ATTEMPT user=leo
+2025-12-13 19:17:41,133 [INFO] [OK] LOGIN_SUCCESS user=leo
+2025-12-13 19:17:41,133 [INFO] -> LOGIN_ATTEMPT user=max
+2025-12-13 19:17:41,133 [WARNING] [FAIL] LOGIN_FAILED user=max
+2025-12-13 19:17:41,133 [INFO] -> LOGIN_ATTEMPT user=starrynight
+2025-12-13 19:17:41,133 [WARNING] [FAIL] LOGIN_FAILED user=starrynight
+2025-12-13 19:17:41,133 [INFO] -> LOGIN_ATTEMPT user=oliver
+2025-12-13 19:17:41,133 [WARNING] [FAIL] LOGIN_FAILED user=oliver
+2025-12-13 19:17:41,134 [INFO] -> LOGIN_ATTEMPT user=pat
+2025-12-13 19:17:41,134 [INFO] [OK] LOGIN_SUCCESS user=pat
+2025-12-13 19:17:41,134 [INFO] -> LOGIN_ATTEMPT user=alex
+2025-12-13 19:17:41,134 [INFO] -> LOGIN_ATTEMPT_WITH_TOTP user=alex
+2025-12-13 19:17:41,134 [INFO] [OK] LOGIN_SUCCESS user=alex
+2025-12-13 19:17:41,134 [INFO] -> LOGIN_ATTEMPT user=taylor
+2025-12-13 19:17:41,134 [WARNING] [FAIL] LOGIN_FAILED user=taylor
+2025-12-13 19:17:41,134 [INFO] -> LOGIN_ATTEMPT user=lily
+2025-12-13 19:17:41,134 [WARNING] [FAIL] LOGIN_FAILED user=lily
+2025-12-13 19:17:41,135 [INFO] -> LOGIN_ATTEMPT user=sam
+2025-12-13 19:17:41,135 [WARNING] [FAIL] LOGIN_FAILED user=sam
+2025-12-13 19:17:41,135 [INFO] -> LOGIN_ATTEMPT user=daniel
+2025-12-13 19:17:41,135 [INFO] [OK] LOGIN_SUCCESS user=daniel
+2025-12-13 19:17:41,135 [INFO] -> LOGIN_ATTEMPT user=daniel
+2025-12-13 19:17:41,135 [INFO] [OK] LOGIN_SUCCESS user=daniel
+2025-12-13 19:17:41,136 [INFO] -> LOGIN_ATTEMPT user=coffee_addict
+2025-12-13 19:17:41,136 [WARNING] [FAIL] LOGIN_FAILED user=coffee_addict
+2025-12-13 19:17:41,136 [INFO] -> LOGIN_ATTEMPT user=sophie
+2025-12-13 19:17:41,136 [WARNING] [FAIL] LOGIN_FAILED user=sophie
+2025-12-13 19:17:41,136 [INFO] -> LOGIN_ATTEMPT user=chris
+2025-12-13 19:17:41,136 [WARNING] [FAIL] LOGIN_FAILED user=chris
