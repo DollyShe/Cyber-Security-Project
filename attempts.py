@@ -106,6 +106,6 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 
 a = Attempt(TOTP=False, RL=True)
-a.password_spraying()
-# a.brute_force("taylor") # easy password with TOTP
+# a.password_spraying()
+a.brute_force("taylor") # easy password with Rate Limit fails after 5 passwords
 # a.brute_force("morgan")
