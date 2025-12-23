@@ -89,9 +89,10 @@ class Server:
         if self.rate_limit != None:
             now = time.time()
             login_attempts = self.rate_limit[username]
-            self.rate_limit[username] = [t for t in attempts if now - t < self.WINDOW]
+            self.rate_limit[username] = [t for t in login_attempts if now - t < self.WINDOW]
             if len(self.rate_limit[username]) >= self.MAX_ATTEMPTS:
                 return LoginResult.RATE_LIMITED
+            self.rate_limit[username].append(now)
         while password != self.DB[username]["password"]:
             return LoginResult.BAD_PASSWORD
         if self.DB[username]["totp_enabled"]:
