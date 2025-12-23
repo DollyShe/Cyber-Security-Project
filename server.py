@@ -11,6 +11,7 @@ class LoginResult(Enum):
     BAD_TOTP = "bad_totp"
     TOTP_TIMEOUT = "totp_timeout"
     RATE_LIMITED = "rate_limited"
+    LOCKED = "locked_account"
 
 class Server:
     def __init__(self, TOTP : bool, RL : bool, lockout : bool):
@@ -28,7 +29,11 @@ class Server:
         else:
             self.rate_limit = None
         if lockout:
+            self.lockout = True
+            self.MAX_FAILS = 10 # atempt
             self.add_lockout_fields()
+        else: 
+            self.lockout = False
     
     def add_lockout_fields(self):
         for user in self.DB:
@@ -97,11 +102,21 @@ class Server:
             if len(self.rate_limit[username]) >= self.MAX_ATTEMPTS:
                 return LoginResult.RATE_LIMITED
             self.rate_limit[username].append(now)
+        if self.lockout:
+            if self.DB[username]["locked"]:
+                return LoginResult.LOCKED
         while password != self.DB[username]["password"]:
+            if self.lockout:
+                self.DB[username]["failed_attempts"] += 1
+                if self.DB[username]["failed_attempts"] >= self.MAX_FAILS:
+                    self.DB[username]["locked"] = True
+                    return LoginResult.BAD_PASSWORD
             return LoginResult.BAD_PASSWORD
         if self.DB[username]["totp_enabled"]:
             self.totp_challenges[username] = time.time() + 30
             return LoginResult.TOTP_REQUIRED
+        if self.lockout:
+            self.DB[username]["failed_attempts"] = 0
         return LoginResult.OK
 
     def login_totp(self, username : str, code : str) -> LoginResult:

@@ -16,9 +16,9 @@ logging.basicConfig(
 )
 
 class Attempt:
-    def __init__(self, TOTP : bool, RL : bool):
+    def __init__(self, TOTP : bool, RL : bool, lockout : bool):
         logging.info(f"Program started - {GROUP_SEED}")
-        self.server = Server(TOTP=TOTP, RL=RL)
+        self.server = Server(TOTP=TOTP, RL=RL, lockout=lockout)
         self.DB = self.server.DB
         self.authorized_users = {}
         self.init_authorized_users()
@@ -105,7 +105,7 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 #     a.random_unauthorized_user_attempt()
 
-a = Attempt(TOTP=False, RL=True)
+a = Attempt(TOTP=False, RL=False, lockout=True)
 # a.password_spraying()
-a.brute_force("taylor") # easy password with Rate Limit fails after 5 passwords
+a.brute_force("taylor") # easy password with lockout fails after 10 passwords
 # a.brute_force("morgan")
