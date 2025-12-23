@@ -85,21 +85,6 @@ class Attempt:
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                     count += 1
                     break
-                if result == LoginResult.TOTP_REQUIRED:
-                    logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
-                    code = f"{secrets.randbelow(1_000_000):06d}"
-                    logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={username}")
-                    result = self.server.login_totp(username, code)
-                    while result == LoginResult.BAD_TOTP:
-                        logging.info(f"[FAIL] LOGIN_WITH_TOTP_FAIL user={username} due to {result}")
-                        code = f"{secrets.randbelow(1_000_000):06d}"
-                        result = self.server.login_totp(username, code)
-                    if result == LoginResult.OK:
-                        logging.info(f"[OK] LOGIN_WITH_TOTP_SUCCESS user={username}")
-                        count += 1
-                    else:
-                        logging.info(f"[FAIL] LOGIN_WITH_TOTP_FAIL user={username} due to {result}")
-                    break
                 logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
         if count > 0:
             logging.info(f"login succeeded for unauthorized user via Password Spraying for {count} users over {len(self.unauthorized_user.list_of_usernames)}")
