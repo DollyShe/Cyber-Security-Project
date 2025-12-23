@@ -1,7 +1,7 @@
 import json
 import time, pyotp
 from enum import Enum
-
+from collections import defaultdict
 
 class LoginResult(Enum):
     OK = "ok"
@@ -10,9 +10,10 @@ class LoginResult(Enum):
     TOTP_REQUIRED = "totp_required"
     BAD_TOTP = "bad_totp"
     TOTP_TIMEOUT = "totp_timeout"
+    RATE_LIMITED = "rate_limited"
 
 class Server:
-    def __init__(self, TOTP : bool):
+    def __init__(self, TOTP : bool, RL : bool):
         with open("users.json") as f:
             self.DB = json.load(f)
         if TOTP:
@@ -20,6 +21,12 @@ class Server:
         else:
             self.remove_totp()
         self.totp_challenges = {}
+        if RL:
+            self.rate_limit = defaultdict(list)
+            self.MAX_ATTEMPTS = 5 # atempt
+            self.WINDOW = 60  # seconds
+        else:
+            self.rate_limit = None
     
     def register(self):
         user_name = input("Please choose a username. You'll use this to sign in. ")
@@ -63,6 +70,10 @@ class Server:
         self.DB["bluebird"]["totp_secret"] = pyotp.random_base32()
         self.DB["bluebird"]["totp_enabled"] = True
     
+    # per user, max 5 attempts per 60 seconds:
+    def add_rate_limit(self):
+        pass
+
     def get_username(self):
         user_name = input("Please enter your username. ")
         if user_name not in self.DB:
@@ -75,6 +86,12 @@ class Server:
     def login(self, username : str , password : str) -> LoginResult:
         if username not in self.DB:
             return LoginResult.NO_SUCH_USER
+        if self.rate_limit != None:
+            now = time.time()
+            login_attempts = self.rate_limit[username]
+            self.rate_limit[username] = [t for t in attempts if now - t < self.WINDOW]
+            if len(self.rate_limit[username]) >= self.MAX_ATTEMPTS:
+                return LoginResult.RATE_LIMITED
         while password != self.DB[username]["password"]:
             return LoginResult.BAD_PASSWORD
         if self.DB[username]["totp_enabled"]:
@@ -103,7 +120,7 @@ class Server:
             json.dump(self.DB, f, indent=2)
 
 # S = Server()
-# print("Welcome to the server.")
+print("Welcome to the server.")
 # while (True):
     
 #     print("Please choose an action:")
@@ -138,5 +155,5 @@ class Server:
 #         print("ERROR: ", e)
 # S.save()
 
-# S = Server(TOTP=False)
+# S = Server(TOTP=True)
 # S.save()

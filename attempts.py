@@ -16,9 +16,9 @@ logging.basicConfig(
 )
 
 class Attempt:
-    def __init__(self, TOTP : bool):
+    def __init__(self, TOTP : bool, RL : bool):
         logging.info(f"Program started - {GROUP_SEED}")
-        self.server = Server(TOTP=TOTP)
+        self.server = Server(TOTP=TOTP, RL=RL)
         self.DB = self.server.DB
         self.authorized_users = {}
         self.init_authorized_users()
@@ -69,9 +69,11 @@ class Attempt:
             if result == LoginResult.OK:
                 logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                 return
+            # if result == LoginResult.TOTP_REQUIRED: not sure if to add this
+            #     logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
+            #     break
             logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
         
-    
     def password_spraying(self):
         count = 0
         with open("PS_passwords.txt", "r") as file:
@@ -103,7 +105,7 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 #     a.random_unauthorized_user_attempt()
 
-a = Attempt(TOTP=True)
-a.password_spraying()
-# a.brute_force("sunnyday")
+a = Attempt(TOTP=True, RL=False)
+# a.password_spraying()
+a.brute_force("taylor") # easy password with TOTP
 # a.brute_force("morgan")
