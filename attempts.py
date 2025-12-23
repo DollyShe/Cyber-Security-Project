@@ -83,6 +83,7 @@ class Attempt:
                 result = self.server.login(username, password)
                 if result == LoginResult.OK:
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
+                    count += 1
                     break
                 if result == LoginResult.TOTP_REQUIRED:
                     logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
@@ -95,6 +96,7 @@ class Attempt:
                         result = self.server.login_totp(username, code)
                     if result == LoginResult.OK:
                         logging.info(f"[OK] LOGIN_WITH_TOTP_SUCCESS user={username}")
+                        count += 1
                     else:
                         logging.info(f"[FAIL] LOGIN_WITH_TOTP_FAIL user={username} due to {result}")
                     break
