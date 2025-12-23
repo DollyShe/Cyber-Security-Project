@@ -1,152 +1,212 @@
 {
   "alex": {
     "password": "123456",
-    "totp_secret": "LWTP7NNNNZKGO3XWJ47KTQ3NBUFG7AK4",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "sam": {
     "password": "password",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "charlie": {
     "password": "qwerty",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "jordan": {
     "password": "526338897",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "taylor": {
     "password": "letmein",
-    "totp_secret": "CCOB6YNORFKCUQAYH54FLD7CJAQ7WGGO",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "morgan": {
     "password": "0000",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "chris": {
     "password": "111111",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "jamie": {
     "password": "admin",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "pat": {
     "password": "iloveyou",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "robin": {
     "password": "test123",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "casey": {
     "password": "Sunflower92",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "jules": {
     "password": "BlueSky2024",
-    "totp_secret": "2XQIPM7WPDR5KUUB2R65FHSB5IO33YTW",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "max": {
     "password": "GamerBoy55",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "ava": {
     "password": "OceanWave11",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "lily": {
     "password": "TigerCat77",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "leo": {
     "password": "MusicLover89",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "sophie": {
     "password": "CoffeeTime44",
-    "totp_secret": "4W6JWY3PCPAJI32XGZ2FEKBYKBZ3MBNL",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "mia": {
     "password": "WinterSnow12",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "ethan": {
     "password": "SummerVibes33",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "oliver": {
     "password": "HappyDays101",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "nina": {
     "password": "Gk9!pA4bfvcb42v@L",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "daniel": {
     "password": "qZ7%Tnfggnbf648_sD",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "user123": {
     "password": "4w$L9ddgfdf4zB!eR2",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "sunnyday": {
     "password": "Fp#3grthgf4dQ18!Vr",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "gamer01": {
     "password": "Mx@9fssgf21_vT7s*",
-    "totp_secret": "AEGME3WFWEFZMAHOXRRY6UXL6NZQI3A7",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "starrynight": {
     "password": "7c!Pwfsrgfd4G4$AfS",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "midnightwolf": {
     "password": "H*9Zfsfsdg5b2_kT#q",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "coffee_addict": {
     "password": "dR6!vdfvcsdc33Yt4*$Wm",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "bluebird": {
     "password": "Zq@3vJfgdss5587%Ln",
-    "totp_secret": "VOCLMTJ52Z7URNPINAR7F3PM2RWSRAKG",
-    "totp_enabled": true
+    "totp_secret": null,
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   },
   "explorer": {
     "password": "tB2$wcdbf45A91!Rx",
     "totp_secret": null,
-    "totp_enabled": false
+    "totp_enabled": false,
+    "failed_attempts": 0,
+    "locked": false
   }
 }

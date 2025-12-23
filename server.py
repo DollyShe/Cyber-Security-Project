@@ -13,7 +13,7 @@ class LoginResult(Enum):
     RATE_LIMITED = "rate_limited"
 
 class Server:
-    def __init__(self, TOTP : bool, RL : bool):
+    def __init__(self, TOTP : bool, RL : bool, lockout : bool):
         with open("users.json") as f:
             self.DB = json.load(f)
         if TOTP:
@@ -27,15 +27,23 @@ class Server:
             self.WINDOW = 60  # seconds
         else:
             self.rate_limit = None
+        if lockout:
+            self.add_lockout_fields()
     
+    def add_lockout_fields(self):
+        for user in self.DB:
+            self.DB[user]["failed_attempts"] = 0
+            self.DB[user]["locked"] = False
+
     def register(self):
         user_name = input("Please choose a username. You'll use this to sign in. ")
         while user_name in self.DB.keys():
             user_name = input("That username is already taken. Please choose another. ")
         password = input("Please choose a password: ")
         self.DB[user_name] = {
-        "user_name": user_name,
-        "password": password}
+            "user_name": user_name,
+            "password": password
+            }
         print("Account created successfully!")
 
     def remove_totp(self):
@@ -69,10 +77,6 @@ class Server:
         self.DB["gamer01"]["totp_enabled"] = True
         self.DB["bluebird"]["totp_secret"] = pyotp.random_base32()
         self.DB["bluebird"]["totp_enabled"] = True
-    
-    # per user, max 5 attempts per 60 seconds:
-    def add_rate_limit(self):
-        pass
 
     def get_username(self):
         user_name = input("Please enter your username. ")
@@ -156,5 +160,6 @@ print("Welcome to the server.")
 #         print("ERROR: ", e)
 # S.save()
 
-# S = Server(TOTP=True)
+# S = Server(TOTP=False, RL=False, lockout=True)
+# S.add_lockout_fields()
 # S.save()
