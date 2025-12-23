@@ -12,9 +12,13 @@ class LoginResult(Enum):
     TOTP_TIMEOUT = "totp_timeout"
 
 class Server:
-    def __init__(self):
+    def __init__(self, TOTP : bool):
         with open("users.json") as f:
             self.DB = json.load(f)
+        if TOTP:
+            self.add_totp()
+        else:
+            self.remove_totp()
         self.totp_challenges = {}
     
     def register(self):
@@ -27,20 +31,36 @@ class Server:
         "password": password}
         print("Account created successfully!")
 
+    def remove_totp(self):
+        self.DB["alex"]["totp_secret"] = None
+        self.DB["alex"]["totp_enabled"] = False
+        self.DB["taylor"]["totp_secret"] = None
+        self.DB["taylor"]["totp_enabled"] = False
+
+        self.DB["jules"]["totp_secret"] = None
+        self.DB["jules"]["totp_enabled"] = False
+        self.DB["sophie"]["totp_secret"] = None
+        self.DB["sophie"]["totp_enabled"] = False
+
+        self.DB["gamer01"]["totp_secret"] = None
+        self.DB["gamer01"]["totp_enabled"] = False
+        self.DB["bluebird"]["totp_secret"] = None
+        self.DB["bluebird"]["totp_enabled"] = False
+
     def add_totp(self):
-        self.DB["alex"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["alex"]["totp_secret"] = pyotp.random_base32()
         self.DB["alex"]["totp_enabled"] = True
-        self.DB["taylor"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["taylor"]["totp_secret"] = pyotp.random_base32()
         self.DB["taylor"]["totp_enabled"] = True
 
-        self.DB["jules"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["jules"]["totp_secret"] = pyotp.random_base32()
         self.DB["jules"]["totp_enabled"] = True
-        self.DB["sophie"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["sophie"]["totp_secret"] = pyotp.random_base32()
         self.DB["sophie"]["totp_enabled"] = True
 
-        self.DB["gamer01"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["gamer01"]["totp_secret"] = pyotp.random_base32()
         self.DB["gamer01"]["totp_enabled"] = True
-        self.DB["bluebird"]["totp_secret"] =  pyotp.random_base32()
+        self.DB["bluebird"]["totp_secret"] = pyotp.random_base32()
         self.DB["bluebird"]["totp_enabled"] = True
     
     def get_username(self):
@@ -52,7 +72,7 @@ class Server:
     def get_password(self):
         return input("Please enter your password. ")
     
-    def login(self, username, password) -> LoginResult:
+    def login(self, username : str , password : str) -> LoginResult:
         if username not in self.DB:
             return LoginResult.NO_SUCH_USER
         while password != self.DB[username]["password"]:
@@ -62,7 +82,7 @@ class Server:
             return LoginResult.TOTP_REQUIRED
         return LoginResult.OK
 
-    def login_totp(self, username, code) -> LoginResult:
+    def login_totp(self, username : str, code : str) -> LoginResult:
         if not self.DB[username]["totp_enabled"] or not self.DB[username]["totp_secret"]:
             print("ERROR: TOTP not enabled for this user\n")
             return LoginResult.NO_SUCH_USER
@@ -116,6 +136,7 @@ class Server:
     
 #     except Exception as e:
 #         print("ERROR: ", e)
+# S.save()
 
-
+# S = Server(TOTP=False)
 # S.save()
