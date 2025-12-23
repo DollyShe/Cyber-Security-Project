@@ -106,6 +106,6 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 
 a = Attempt(TOTP=False, RL=False, lockout=True)
-# a.password_spraying()
-a.brute_force("taylor") # easy password with lockout fails after 10 passwords
+a.password_spraying()
+# a.brute_force("taylor") # easy password with lockout fails after 10 passwords
 # a.brute_force("morgan")
