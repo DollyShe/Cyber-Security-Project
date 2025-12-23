@@ -16,9 +16,9 @@ logging.basicConfig(
 )
 
 class Attempt:
-    def __init__(self):
+    def __init__(self, TOTP : bool):
         logging.info(f"Program started - {GROUP_SEED}")
-        self.server = Server()
+        self.server = Server(TOTP=TOTP)
         self.DB = self.server.DB
         self.authorized_users = {}
         self.init_authorized_users()
@@ -38,11 +38,11 @@ class Attempt:
                 code = self.authorized_users[random_username].get_totp_code()
                 logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={random_username}")
                 if not self.server.login_totp(random_username, code):
-                    logging.error(f"[FAIL] LOGIN_FAILED user={random_username} even though he's an authorized user!")
+                    logging.error(f"[FAIL] LOGIN_FAIL user={random_username} even though he's an authorized user!")
                     return
             logging.info(f"[OK] LOGIN_SUCCESS user={random_username}")
             return
-        logging.warning(f"[FAIL] LOGIN_FAILED user={random_username}")
+        logging.warning(f"[FAIL] LOGIN_FAIL user={random_username}")
     
     def random_unauthorized_user_attempt(self):
         random_username = random.choice(list(self.DB.keys()))
@@ -53,41 +53,56 @@ class Attempt:
                 code = f"{secrets.randbelow(1_000_000):06d}"
                 logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={random_username}")
                 if not self.server.login_totp(random_username, code):
-                    logging.error(f"[FAIL] LOGIN_FAILED user={random_username} and he's an unauthorized user :)")
+                    logging.error(f"[FAIL] LOGIN_FAIL user={random_username} and he's an unauthorized user :)")
                     return
             logging.info(f"[OK] LOGIN_SUCCESS user={random_username}")
             return
-        logging.warning(f"[FAIL] LOGIN_FAILED user={random_username}")
+        logging.warning(f"[FAIL] LOGIN_FAIL user={random_username}")
     
-    def brute_force(self, username):
+    def brute_force(self, username : str):
         with open("BF_passwords.txt", "r") as file:
             lines = file.readlines()
         passwords = [line.strip() for line in lines]
         for password in passwords:
             logging.info(f"-> LOGIN_ATTEMPT user={username}")
-            if self.server.login(username, password) == LoginResult.OK:
+            result = self.server.login(username, password)
+            if result == LoginResult.OK:
                 logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                 return
-            logging.warning(f"[FAIL] LOGIN_FAILED user={username}")
+            logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
         
     
     def password_spraying(self):
+        count = 0
         with open("PS_passwords.txt", "r") as file:
             lines = file.readlines()
         passwords = [line.strip() for line in lines]
         for username in self.unauthorized_user.list_of_usernames:
             for password in passwords:
                 logging.info(f"-> LOGIN_ATTEMPT user={username}")
-                if self.server.login(username, password):
-                    if self.DB[username]["totp_enabled"]:
-                        code = f"{secrets.randbelow(1_000_000):06d}"
-                        logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={username}")
-                        while self.server.login_totp(username, code) != LoginResult.TOTP_TIMEOUT:
-                            code = f"{secrets.randbelow(1_000_000):06d}"
+                result = self.server.login(username, password)
+                if result == LoginResult.OK:
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                     break
-                logging.warning(f"[FAIL] LOGIN_FAILED user={username}")
-        # logging.warning("login failed for unauthorized user via Password Spraying.")
+                if result == LoginResult.TOTP_REQUIRED:
+                    logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
+                    code = f"{secrets.randbelow(1_000_000):06d}"
+                    logging.info(f"-> LOGIN_ATTEMPT_WITH_TOTP user={username}")
+                    result = self.server.login_totp(username, code)
+                    while result == LoginResult.BAD_TOTP:
+                        logging.info(f"[FAIL] LOGIN_WITH_TOTP_FAIL user={username} due to {result}")
+                        code = f"{secrets.randbelow(1_000_000):06d}"
+                        result = self.server.login_totp(username, code)
+                    if result == LoginResult.OK:
+                        logging.info(f"[OK] LOGIN_WITH_TOTP_SUCCESS user={username}")
+                    else:
+                        logging.info(f"[FAIL] LOGIN_WITH_TOTP_FAIL user={username} due to {result}")
+                    break
+                logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
+        if count > 0:
+            logging.info(f"login succeeded for unauthorized user via Password Spraying for {count} users over {len(self.unauthorized_user.list_of_usernames)}")
+        else:
+            logging.info(f"login failed for unauthorized user via Password Spraying for all {len(self.unauthorized_user.list_of_usernames)} users")
 
 
 # with open("BF_passwords.txt", "r") as file:
@@ -101,7 +116,7 @@ class Attempt:
 #     a.random_unauthorized_user_attempt()
 #     a.random_unauthorized_user_attempt()
 
-a = Attempt()
-# a.password_spraying()
-a.brute_force("sunnyday")
+a = Attempt(TOTP=True)
+a.password_spraying()
+# a.brute_force("sunnyday")
 # a.brute_force("morgan")
