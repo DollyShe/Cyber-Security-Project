@@ -76,17 +76,17 @@ class Server:
         }
         return challenge
     
-    def verify_captcha(self, username: str, response: str = None, solve: bool = False) -> bool:
+    def verify_captcha(self, username: str, response: str = None, solve: bool = False) -> LoginResult:
         """Verify CAPTCHA response"""
         if username not in self.captcha_challenges:
-            return False
+            return LoginResult.NO_SUCH_USER
         
         challenge_data = self.captcha_challenges[username]
         
         # Check expiration
         if time.time() > challenge_data["expires"]:
             del self.captcha_challenges[username]
-            return False
+            return LoginResult.CAPTCHA_FAILED
         
         # Auto-solve for authorized users (simulation)
         if solve:
@@ -95,9 +95,9 @@ class Server:
         if response == challenge_data["challenge"]:
             del self.captcha_challenges[username]
             self.captcha_attempts[username] = 0  # Reset attempts
-            return True
+            return LoginResult.OK
         
-        return False
+        return LoginResult.CAPTCHA_FAILED
     
     # ==================== TOTP ====================
 
@@ -174,6 +174,7 @@ class Server:
     def login(self, username : str , password : str) -> LoginResult:
         if username not in self.DB:
             return LoginResult.NO_SUCH_USER
+        # Check rate limiting
         if self.rate_limit != None:
             now = time.time()
             login_attempts = self.rate_limit[username]
@@ -181,21 +182,39 @@ class Server:
             if len(self.rate_limit[username]) >= self.MAX_ATTEMPTS:
                 return LoginResult.RATE_LIMITED
             self.rate_limit[username].append(now)
+        # Check account lockout
         if self.lockout:
             if self.DB[username]["locked"]:
                 return LoginResult.LOCKED
-        while password != self.DB[username]["password"]:
+        # Check CAPTCHA requirement
+        # If CAPTCHA required, verify it first
+        if self._check_captcha_required(username):
+            # Ensure there is an active challenge
+            if username not in self.captcha_challenges:
+                self.request_captcha(username)
+                # You can store challenge internally and return just CAPTCHA_REQUIRED
+                return LoginResult.CAPTCHA_REQUIRED
+            # Verify response
+            return self.verify_captcha(username, response=password)
+        
+        # Verify password
+        if password != self.DB[username]["password"]:
             if self.lockout:
                 self.DB[username]["failed_attempts"] += 1
                 if self.DB[username]["failed_attempts"] >= self.MAX_FAILS:
                     self.DB[username]["locked"] = True
                     return LoginResult.BAD_PASSWORD
             return LoginResult.BAD_PASSWORD
+        
+        # Password correct - check for TOTP
         if self.DB[username]["totp_enabled"]:
             self.totp_challenges[username] = time.time() + 30
             return LoginResult.TOTP_REQUIRED
+        
+        # Success - reset failed attempts
         if self.lockout:
             self.DB[username]["failed_attempts"] = 0
+        
         return LoginResult.OK
 
     def save(self):

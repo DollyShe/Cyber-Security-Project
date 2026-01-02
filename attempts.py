@@ -69,9 +69,6 @@ class Attempt:
             if result == LoginResult.OK:
                 logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                 return
-            # if result == LoginResult.TOTP_REQUIRED: not sure if to add this
-            #     logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
-            #     break
             logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
         
     def password_spraying(self):
