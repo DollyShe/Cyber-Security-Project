@@ -1,5 +1,6 @@
 import json
-import time, pyotp
+import time
+import pyotp
 from enum import Enum
 from collections import defaultdict
 
@@ -12,44 +13,93 @@ class LoginResult(Enum):
     TOTP_TIMEOUT = "totp_timeout"
     RATE_LIMITED = "rate_limited"
     LOCKED = "locked_account"
+    CAPTCHA_REQUIRED = "captcha_required"
+    CAPTCHA_FAILED = "captcha_failed"
 
 class Server:
-    def __init__(self, TOTP : bool, RL : bool, lockout : bool):
+    def __init__(self, TOTP: bool = False, RL: bool = False, lockout: bool = False,
+                captcha: bool = False):
         with open("users.json") as f:
             self.DB = json.load(f)
+        
+        self.use_captcha = captcha
+
+        # TOTP setup
         if TOTP:
             self.add_totp()
         else:
             self.remove_totp()
         self.totp_challenges = {}
+
+        # Rate limiting setup
         if RL:
             self.rate_limit = defaultdict(list)
             self.MAX_ATTEMPTS = 5 # atempt
             self.WINDOW = 60  # seconds
         else:
             self.rate_limit = None
+        
+        # Account lockout setup
         if lockout:
             self.lockout = True
             self.MAX_FAILS = 10 # atempt
             self.add_lockout_fields()
         else: 
             self.lockout = False
+        
+        # CAPTCHA setup
+        if captcha:
+            self.captcha_challenges = {}  # {username: expiry_time}
+            self.captcha_threshold = 3  # Failed attempts before CAPTCHA required
+            self.captcha_attempts = defaultdict(int)
     
+    # ==================== LOCKOUT ====================
     def add_lockout_fields(self):
         for user in self.DB:
             self.DB[user]["failed_attempts"] = 0
             self.DB[user]["locked"] = False
 
-    def register(self):
-        user_name = input("Please choose a username. You'll use this to sign in. ")
-        while user_name in self.DB.keys():
-            user_name = input("That username is already taken. Please choose another. ")
-        password = input("Please choose a password: ")
-        self.DB[user_name] = {
-            "user_name": user_name,
-            "password": password
-            }
-        print("Account created successfully!")
+    # ==================== CAPTCHA ====================
+    
+    def _check_captcha_required(self, username: str) -> bool:
+        """Check if CAPTCHA is required for this user"""
+        if not self.use_captcha:
+            return False
+        return self.captcha_attempts[username] >= self.captcha_threshold
+    
+    def request_captcha(self, username: str) -> str:
+        """Generate a CAPTCHA challenge"""
+        challenge = secrets.token_hex(4).upper()
+        self.captcha_challenges[username] = {
+            "challenge": challenge,
+            "expires": time.time() + 60  # 1 minutes
+        }
+        return challenge
+    
+    def verify_captcha(self, username: str, response: str = None, solve: bool = False) -> bool:
+        """Verify CAPTCHA response"""
+        if username not in self.captcha_challenges:
+            return False
+        
+        challenge_data = self.captcha_challenges[username]
+        
+        # Check expiration
+        if time.time() > challenge_data["expires"]:
+            del self.captcha_challenges[username]
+            return False
+        
+        # Auto-solve for authorized users (simulation)
+        if solve:
+            response = challenge_data["challenge"]
+        
+        if response == challenge_data["challenge"]:
+            del self.captcha_challenges[username]
+            self.captcha_attempts[username] = 0  # Reset attempts
+            return True
+        
+        return False
+    
+    # ==================== TOTP ====================
 
     def remove_totp(self):
         self.DB["alex"]["totp_secret"] = None
@@ -82,6 +132,35 @@ class Server:
         self.DB["gamer01"]["totp_enabled"] = True
         self.DB["bluebird"]["totp_secret"] = pyotp.random_base32()
         self.DB["bluebird"]["totp_enabled"] = True
+
+    def login_totp(self, username : str, code : str) -> LoginResult:
+        if not self.DB[username]["totp_enabled"] or not self.DB[username]["totp_secret"]:
+            print("ERROR: TOTP not enabled for this user\n")
+            return LoginResult.NO_SUCH_USER
+        expire = self.totp_challenges.get(username)
+        if expire is None:
+            # no active challenge; you can require password step first
+            return LoginResult.TOTP_REQUIRED
+        if time.time() > expire:
+            del self.totp_challenges[username]
+            return LoginResult.TOTP_TIMEOUT
+        totp = pyotp.TOTP(self.DB[username]["totp_secret"])
+        if totp.verify(code):
+            return LoginResult.OK
+        return LoginResult.BAD_TOTP
+
+    # =================== SERVER ===================
+
+    def register(self):
+        user_name = input("Please choose a username. You'll use this to sign in. ")
+        while user_name in self.DB.keys():
+            user_name = input("That username is already taken. Please choose another. ")
+        password = input("Please choose a password: ")
+        self.DB[user_name] = {
+            "user_name": user_name,
+            "password": password
+            }
+        print("Account created successfully!")
 
     def get_username(self):
         user_name = input("Please enter your username. ")
@@ -119,28 +198,12 @@ class Server:
             self.DB[username]["failed_attempts"] = 0
         return LoginResult.OK
 
-    def login_totp(self, username : str, code : str) -> LoginResult:
-        if not self.DB[username]["totp_enabled"] or not self.DB[username]["totp_secret"]:
-            print("ERROR: TOTP not enabled for this user\n")
-            return LoginResult.NO_SUCH_USER
-        expire = self.totp_challenges.get(username)
-        if expire is None:
-            # no active challenge; you can require password step first
-            return LoginResult.TOTP_REQUIRED
-        if time.time() > expire:
-            del self.totp_challenges[username]
-            return LoginResult.TOTP_TIMEOUT
-        totp = pyotp.TOTP(self.DB[username]["totp_secret"])
-        if totp.verify(code):
-            return LoginResult.OK
-        return LoginResult.BAD_TOTP
-
     def save(self):
         with open("users.json", "w") as f:
             json.dump(self.DB, f, indent=2)
 
 # S = Server()
-print("Welcome to the server.")
+# print("Welcome to the server.")
 # while (True):
     
 #     print("Please choose an action:")
