@@ -199,11 +199,15 @@ class Server:
         
         # Verify password
         if password != self.DB[username]["password"]:
+            # Track failed attempts for CAPTCHA
+            if self.use_captcha:
+                self.captcha_attempts[username] += 1
+            
+            # Track failed attempts for lockout
             if self.lockout:
                 self.DB[username]["failed_attempts"] += 1
                 if self.DB[username]["failed_attempts"] >= self.MAX_FAILS:
                     self.DB[username]["locked"] = True
-                    return LoginResult.BAD_PASSWORD
             return LoginResult.BAD_PASSWORD
         
         # Password correct - check for TOTP
