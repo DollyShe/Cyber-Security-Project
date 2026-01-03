@@ -4,8 +4,6 @@ import random
 import logging
 import secrets
 
-GROUP_SEED = 526338897
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -16,9 +14,12 @@ logging.basicConfig(
 )
 
 class Attempt:
-    def __init__(self, TOTP : bool = False, RL : bool = False, lockout : bool = False, captcha: bool = False):
+    def __init__(self, TOTP: bool = False, RL: bool = False, lockout: bool = False,
+                 sha256_salt: bool = False, bcrypt_hash: bool = False, argon2_hash: bool = False,
+                 captcha: bool = False, pepper: bool = False):
         logging.info(f"Program started - {GROUP_SEED}")
-        self.server = Server(TOTP=TOTP, RL=RL, lockout=lockout, captcha=captcha)
+        self.server = Server(TOTP=TOTP, RL=RL, lockout=lockout, sha256_salt=sha256_salt, bcrypt_hash=bcrypt_hash, argon2_hash=argon2_hash,
+                 captcha=captcha, pepper=pepper)
         self.DB = self.server.DB
         self.authorized_users = {}
         self.init_authorized_users()
@@ -46,6 +47,9 @@ class Attempt:
     
     def random_unauthorized_user_attempt(self):
         random_username = random.choice(list(self.DB.keys()))
+        with open("BF_passwords.txt", "r") as file:
+            lines = file.readlines()
+        passwords = [line.strip() for line in lines]
         password = random.choice(list(passwords))
         logging.info(f"-> LOGIN_ATTEMPT user={random_username}")
         if self.server.login(random_username, password):
@@ -72,37 +76,28 @@ class Attempt:
             logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
         
     def password_spraying(self):
-        count = 0
         with open("PS_passwords.txt", "r") as file:
             lines = file.readlines()
         passwords = [line.strip() for line in lines]
-        for username in self.unauthorized_user.list_of_usernames:
-            for password in passwords:
+        hacked_users = list()
+        for password in passwords:
+            for username in self.unauthorized_user.list_of_usernames:
+                if username in hacked_users:
+                    continue
                 logging.info(f"-> LOGIN_ATTEMPT user={username}")
                 result = self.server.login(username, password)
                 if result == LoginResult.OK:
+                    hacked_users.append(username)
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
-                    count += 1
                     break
                 logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
-        if count > 0:
-            logging.info(f"login succeeded for unauthorized user via Password Spraying for {count} users over {len(self.unauthorized_user.list_of_usernames)}")
+        if len(hacked_users) > 0:
+            logging.info(f"login succeeded for unauthorized user via Password Spraying for {len(hacked_users)} users over {len(self.unauthorized_user.list_of_usernames)}")
         else:
             logging.info(f"login failed for unauthorized user via Password Spraying for all {len(self.unauthorized_user.list_of_usernames)} users")
 
 
-# with open("BF_passwords.txt", "r") as file:
-#     lines = file.readlines()
-# passwords = [line.strip() for line in lines]        
-# a = Attempt()
-# for i in range(0,10):
-#     a.random_authorized_user_attempt()
-#     a.random_authorized_user_attempt()
-#     a.random_unauthorized_user_attempt()
-#     a.random_unauthorized_user_attempt()
-#     a.random_unauthorized_user_attempt()
-
-a = Attempt(captcha=True)
+a = Attempt(argon2_hash=True)
 a.password_spraying()
 # a.brute_force("taylor") # easy password with lockout fails after 10 passwords
 # a.brute_force("morgan")

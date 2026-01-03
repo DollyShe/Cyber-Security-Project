@@ -1,8 +1,16 @@
 import json
 import time
 import pyotp
+import hashlib
+import secrets
+import os
 from enum import Enum
 from collections import defaultdict
+from typing import Union
+import bcrypt
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+from config import *
 
 class LoginResult(Enum):
     OK = "ok"
@@ -17,12 +25,33 @@ class LoginResult(Enum):
     CAPTCHA_FAILED = "captcha_failed"
 
 class Server:
+    # Server-side pepper (should be stored securely, e.g., environment variable)
+    PEPPER = os.environ.get("PASSWORD_PEPPER", "S3cr3tP3pp3r!@#$%^&*()")
+
     def __init__(self, TOTP: bool = False, RL: bool = False, lockout: bool = False,
-                captcha: bool = False):
+                 sha256_salt: bool = False, bcrypt_hash: bool = False, argon2_hash: bool = False,
+                 captcha: bool = False, pepper: bool = False):
         with open("users.json") as f:
             self.DB = json.load(f)
         
+        self.use_sha256_salt = sha256_salt
+        self.use_bcrypt = bcrypt_hash
+        self.use_argon2 = argon2_hash
+        self.use_pepper = pepper
         self.use_captcha = captcha
+
+        if argon2_hash:
+            self.hashing = "argon2"
+        elif bcrypt_hash:
+            self.hashing = "bcrypt"
+        elif sha256_salt:
+            self.hashing = "sha256_salt"
+        else:
+            self.hashing = None
+        
+        # Initialize Argon2 hasher if needed
+        if self.use_argon2:
+            self.argon2_hasher = PasswordHasher()
 
         # TOTP setup
         if TOTP:
@@ -34,15 +63,12 @@ class Server:
         # Rate limiting setup
         if RL:
             self.rate_limit = defaultdict(list)
-            self.MAX_ATTEMPTS = 5 # atempt
-            self.WINDOW = 60  # seconds
         else:
             self.rate_limit = None
         
         # Account lockout setup
         if lockout:
             self.lockout = True
-            self.MAX_FAILS = 10 # atempt
             self.add_lockout_fields()
         else: 
             self.lockout = False
@@ -52,12 +78,108 @@ class Server:
             self.captcha_challenges = {}  # {username: expiry_time}
             self.captcha_threshold = 3  # Failed attempts before CAPTCHA required
             self.captcha_attempts = defaultdict(int)
+        
+        # Hash passwords if hashing is enabled and passwords are plain text
+        if self.hashing:
+            self._hash_passwords_if_needed()
+            self.save_hashed_passwords()
     
-    # ==================== LOCKOUT ====================
     def add_lockout_fields(self):
         for user in self.DB:
             self.DB[user]["failed_attempts"] = 0
             self.DB[user]["locked"] = False
+
+    # ==================== PASSWORD HASHING ====================
+    
+    def _add_pepper(self, password: str) -> str:
+        """Add pepper to password if enabled"""
+        if self.use_pepper:
+            return password + self.PEPPER
+        return password
+    
+    def _hash_password_sha256_salt(self, password: str) -> dict:
+        """Hash password using SHA-256 with random salt"""
+        salt = secrets.token_hex(32)
+        peppered = self._add_pepper(password)
+        hashed = hashlib.sha256((peppered + salt).encode()).hexdigest()
+        return {"hash": hashed, "salt": salt, "algorithm": "sha256_salt"}
+    
+    def _verify_sha256_salt(self, password: str, stored: dict) -> bool:
+        """Verify password against SHA-256 + salt hash"""
+        peppered = self._add_pepper(password)
+        computed = hashlib.sha256((peppered + stored["salt"]).encode()).hexdigest()
+        return secrets.compare_digest(computed, stored["hash"])
+    
+    def _hash_password_bcrypt(self, password: str) -> dict:
+        """Hash password using bcrypt"""
+        peppered = self._add_pepper(password)
+        # Truncate to 72 bytes (bcrypt limit)
+        password_bytes = peppered.encode('utf-8')[:72]
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        return {"hash": hashed.decode('utf-8'), "algorithm": "bcrypt"}
+    
+    def _verify_bcrypt(self, password: str, stored: dict) -> bool:
+        """Verify password against bcrypt hash"""
+        peppered = self._add_pepper(password)
+        try:
+            password_bytes = peppered.encode('utf-8')[:72]
+            return bcrypt.checkpw(password_bytes, stored["hash"].encode('utf-8'))
+        except Exception:
+            return False
+    
+    def _hash_password_argon2(self, password: str) -> dict:
+        """Hash password using Argon2 (winner of Password Hashing Competition)"""
+        peppered = self._add_pepper(password)
+        hashed = self.argon2_hasher.hash(peppered)
+        return {"hash": hashed, "algorithm": "argon2"}
+    
+    def _verify_argon2(self, password: str, stored: dict) -> bool:
+        """Verify password against Argon2 hash"""
+        peppered = self._add_pepper(password)
+        try:
+            self.argon2_hasher.verify(stored["hash"], peppered)
+            return True
+        except VerifyMismatchError:
+            return False
+        except Exception:
+            return False
+    
+    def hash_password(self, password: str) -> Union[dict, str]:
+        """Hash password using configured algorithm"""
+        if self.hashing == "sha256_salt":
+            return self._hash_password_sha256_salt(password)
+        elif self.hashing == "bcrypt":
+            return self._hash_password_bcrypt(password)
+        elif self.hashing == "argon2":
+            return self._hash_password_argon2(password)
+        else:
+            return password  # No hashing, return plain text
+    
+    def verify_password(self, password: str, stored_password) -> bool:
+        """Verify password against stored hash or plain text"""
+        # If stored_password is a dict, it's hashed
+        if isinstance(stored_password, dict):
+            algorithm = stored_password.get("algorithm")
+            if algorithm == "sha256_salt":
+                return self._verify_sha256_salt(password, stored_password)
+            elif algorithm == "bcrypt":
+                return self._verify_bcrypt(password, stored_password)
+            elif algorithm == "argon2":
+                return self._verify_argon2(password, stored_password)
+        # Plain text comparison (for backwards compatibility)
+        return secrets.compare_digest(password.encode('utf-8'), stored_password.encode('utf-8'))
+    
+    def _hash_passwords_if_needed(self):
+        """Hash all plain text passwords in the database"""
+        for username in self.DB:
+            password = self.DB[username]["password"]
+            # Only hash if it's still plain text (string, not dict)
+            if isinstance(password, str):
+                self.DB[username]["password"] = self.hash_password(password)
+    
+    def save_hashed_passwords(self):
+        with open("hashed_passwords.json", "w") as f:
+            json.dump(self.DB, f, indent=2)
 
     # ==================== CAPTCHA ====================
     
@@ -98,7 +220,7 @@ class Server:
             return LoginResult.OK
         
         return LoginResult.CAPTCHA_FAILED
-    
+
     # ==================== TOTP ====================
 
     def remove_totp(self):
@@ -178,8 +300,8 @@ class Server:
         if self.rate_limit != None:
             now = time.time()
             login_attempts = self.rate_limit[username]
-            self.rate_limit[username] = [t for t in login_attempts if now - t < self.WINDOW]
-            if len(self.rate_limit[username]) >= self.MAX_ATTEMPTS:
+            self.rate_limit[username] = [t for t in login_attempts if now - t < WINDOW]
+            if len(self.rate_limit[username]) >= MAX_ATTEMPTS:
                 return LoginResult.RATE_LIMITED
             self.rate_limit[username].append(now)
         # Check account lockout
@@ -196,17 +318,18 @@ class Server:
                 return LoginResult.CAPTCHA_REQUIRED
             # Verify response
             return self.verify_captcha(username, response=password)
-        
-        # Verify password
-        if password != self.DB[username]["password"]:
+
+        # Verify password (handles both hashed and plain text)
+        stored_password = self.DB[username]["password"]
+        if not self.verify_password(password, stored_password):
             # Track failed attempts for CAPTCHA
             if self.use_captcha:
                 self.captcha_attempts[username] += 1
-            
+
             # Track failed attempts for lockout
             if self.lockout:
                 self.DB[username]["failed_attempts"] += 1
-                if self.DB[username]["failed_attempts"] >= self.MAX_FAILS:
+                if self.DB[username]["failed_attempts"] >= MAX_FAILS:
                     self.DB[username]["locked"] = True
             return LoginResult.BAD_PASSWORD
         

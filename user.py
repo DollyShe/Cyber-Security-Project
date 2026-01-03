@@ -13,7 +13,6 @@ class Authorized_user:
         totp = pyotp.TOTP(self.totp_secret)
         return totp.now()
 
-
 class Unauthorized_user:
     def __init__(self, usernames : list):
         self.list_of_usernames = usernames
