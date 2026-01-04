@@ -51,7 +51,11 @@ class Server:
         
         # Initialize Argon2 hasher if needed
         if self.use_argon2:
-            self.argon2_hasher = PasswordHasher()
+            self.argon2_hasher = PasswordHasher(
+                time_cost=TIME,            # Number of iterations
+                memory_cost=MEMORY * 1024, #(Note: Argon2 uses KiB, so 64 * 1024)
+                parallelism=PARALLELISM    # Number of parallel threads
+            )
 
         # TOTP setup
         if TOTP:
@@ -76,7 +80,7 @@ class Server:
         # CAPTCHA setup
         if captcha:
             self.captcha_challenges = {}  # {username: expiry_time}
-            self.captcha_threshold = 3  # Failed attempts before CAPTCHA required
+            self.captcha_threshold = THRESHOLD  # Failed attempts before CAPTCHA required
             self.captcha_attempts = defaultdict(int)
         
         # Hash passwords if hashing is enabled and passwords are plain text
@@ -115,7 +119,7 @@ class Server:
         peppered = self._add_pepper(password)
         # Truncate to 72 bytes (bcrypt limit)
         password_bytes = peppered.encode('utf-8')[:72]
-        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt(rounds=COST))
         return {"hash": hashed.decode('utf-8'), "algorithm": "bcrypt"}
     
     def _verify_bcrypt(self, password: str, stored: dict) -> bool:
