@@ -1,8 +1,8 @@
 {
   "alex": {
     "password": "123456",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "CLM4UCZEVOILXRUQA52Y3C2HTGO6L72E",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },
@@ -29,8 +29,8 @@
   },
   "taylor": {
     "password": "letmein",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "MFXEHFT2KI6PDOG6K64MCVZ2XEYBUDLO",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },
@@ -78,8 +78,8 @@
   },
   "jules": {
     "password": "BlueSky2024",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "4OHFKIVU6BIKXBJZJK5DHVKFSY2DJNVX",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },
@@ -113,8 +113,8 @@
   },
   "sophie": {
     "password": "CoffeeTime44",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "PYQ43GJSK2REJYTFIADINHQI7ZDKVZUV",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },
@@ -169,8 +169,8 @@
   },
   "gamer01": {
     "password": "Mx@9fssgf21_vT7s*",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "7Q66TX43CD2SC5S2ENHMVP52UBC32EAB",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },
@@ -197,8 +197,8 @@
   },
   "bluebird": {
     "password": "Zq@3vJfgdss5587%Ln",
-    "totp_secret": null,
-    "totp_enabled": false,
+    "totp_secret": "55RT62MYUY26V65XIORFMCBNQKFKOGWL",
+    "totp_enabled": true,
     "failed_attempts": 0,
     "locked": false
   },

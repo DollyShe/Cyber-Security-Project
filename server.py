@@ -10,7 +10,7 @@ from typing import Union
 import bcrypt
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from config import *
+from MetricsCollector import *
 
 class LoginResult(Enum):
     OK = "ok"
@@ -33,12 +33,6 @@ class Server:
                  captcha: bool = False, pepper: bool = False):
         with open("users.json") as f:
             self.DB = json.load(f)
-        
-        self.use_sha256_salt = sha256_salt
-        self.use_bcrypt = bcrypt_hash
-        self.use_argon2 = argon2_hash
-        self.use_pepper = pepper
-        self.use_captcha = captcha
 
         if argon2_hash:
             self.hashing = "argon2"
@@ -49,19 +43,35 @@ class Server:
         else:
             self.hashing = None
         
+        self.protections = {
+            'totp': TOTP,
+            'rate_limiting': RL,
+            'lockout': lockout,
+            'captcha': captcha,
+            'pepper': pepper,
+            'hash_mode': self.hashing
+        }
+        
         # Initialize Argon2 hasher if needed
-        if self.use_argon2:
+        if argon2_hash:
             self.argon2_hasher = PasswordHasher(
                 time_cost=TIME,            # Number of iterations
                 memory_cost=MEMORY * 1024, #(Note: Argon2 uses KiB, so 64 * 1024)
                 parallelism=PARALLELISM    # Number of parallel threads
             )
 
+        # Hash passwords if hashing is enabled and passwords are plain text
+        if self.hashing:
+            self._hash_passwords_if_needed()
+            self.save_hashed_passwords()
+
         # TOTP setup
         if TOTP:
             self.add_totp()
+            self.save()
         else:
             self.remove_totp()
+            self.save()
         self.totp_challenges = {}
 
         # Rate limiting setup
@@ -82,22 +92,20 @@ class Server:
             self.captcha_challenges = {}  # {username: expiry_time}
             self.captcha_threshold = THRESHOLD  # Failed attempts before CAPTCHA required
             self.captcha_attempts = defaultdict(int)
-        
-        # Hash passwords if hashing is enabled and passwords are plain text
-        if self.hashing:
-            self._hash_passwords_if_needed()
-            self.save_hashed_passwords()
     
     def add_lockout_fields(self):
         for user in self.DB:
             self.DB[user]["failed_attempts"] = 0
             self.DB[user]["locked"] = False
+    
+    def get_protection(self):
+        return self.protections
 
     # ==================== PASSWORD HASHING ====================
     
     def _add_pepper(self, password: str) -> str:
         """Add pepper to password if enabled"""
-        if self.use_pepper:
+        if self.protections.get('pepper'):
             return password + self.PEPPER
         return password
     
@@ -150,11 +158,11 @@ class Server:
     
     def hash_password(self, password: str) -> Union[dict, str]:
         """Hash password using configured algorithm"""
-        if self.hashing == "sha256_salt":
+        if self.protections.get('hash_mode') == "sha256_salt":
             return self._hash_password_sha256_salt(password)
-        elif self.hashing == "bcrypt":
+        elif self.protections.get('hash_mode') == "bcrypt":
             return self._hash_password_bcrypt(password)
-        elif self.hashing == "argon2":
+        elif self.protections.get('hash_mode') == "argon2":
             return self._hash_password_argon2(password)
         else:
             return password  # No hashing, return plain text
@@ -189,7 +197,7 @@ class Server:
     
     def _check_captcha_required(self, username: str) -> bool:
         """Check if CAPTCHA is required for this user"""
-        if not self.use_captcha:
+        if not self.protections.get('captcha'):
             return False
         return self.captcha_attempts[username] >= self.captcha_threshold
     
@@ -327,7 +335,7 @@ class Server:
         stored_password = self.DB[username]["password"]
         if not self.verify_password(password, stored_password):
             # Track failed attempts for CAPTCHA
-            if self.use_captcha:
+            if self.protections.get('captcha'):
                 self.captcha_attempts[username] += 1
 
             # Track failed attempts for lockout
@@ -345,7 +353,7 @@ class Server:
         # Success - reset failed attempts
         if self.lockout:
             self.DB[username]["failed_attempts"] = 0
-        
+
         return LoginResult.OK
 
     def save(self):

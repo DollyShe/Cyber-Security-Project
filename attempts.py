@@ -1,5 +1,5 @@
-from server import *
-from user import *
+from Server import *
+from User import *
 import random
 import logging
 import secrets
@@ -24,6 +24,7 @@ class Attempt:
         self.authorized_users = {}
         self.init_authorized_users()
         self.unauthorized_user = Unauthorized_user(self.DB.keys())
+        self.metrics = MetricsCollector()
 
     def init_authorized_users(self):
         for username in self.DB.keys():
@@ -69,7 +70,10 @@ class Attempt:
         passwords = [line.strip() for line in lines]
         for password in passwords:
             logging.info(f"-> LOGIN_ATTEMPT user={username}")
+            start = time.perf_counter()
             result = self.server.login(username, password)
+            latency_ms = (time.perf_counter() - start) * 1000
+            self.metrics.record_attempt(username, self.server.protections, result, latency_ms)
             if result == LoginResult.OK:
                 logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                 return
@@ -85,7 +89,10 @@ class Attempt:
                 if username in hacked_users:
                     continue
                 logging.info(f"-> LOGIN_ATTEMPT user={username}")
+                start = time.perf_counter()
                 result = self.server.login(username, password)
+                latency_ms = (time.perf_counter() - start) * 1000
+                self.metrics.record_attempt(username, self.server.protections, result, latency_ms)
                 if result == LoginResult.OK:
                     hacked_users.append(username)
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
@@ -97,7 +104,8 @@ class Attempt:
             logging.info(f"login failed for unauthorized user via Password Spraying for all {len(self.unauthorized_user.list_of_usernames)} users")
 
 
-a = Attempt(argon2_hash=True)
+a = Attempt(TOTP=True)
 a.password_spraying()
+a.metrics.save_to_csv("attempts.csv")
 # a.brute_force("taylor") # easy password with lockout fails after 10 passwords
 # a.brute_force("morgan")

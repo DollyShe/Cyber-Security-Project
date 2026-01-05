@@ -15,6 +15,6 @@ THRESHOLD = 3
 COST = 12
 
 # argon2id configurations
-TIME = 1
-MEMORY = 64
-PARALLELISM = 1
+TIME = 1        # Number of iterations
+MEMORY = 64     # KB
+PARALLELISM = 1 # Number of parallel threads
