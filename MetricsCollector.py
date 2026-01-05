@@ -6,16 +6,16 @@ class MetricsCollector:
     def __init__(self):
         self.results = []
     
-    def record_attempt(self, username, TOTP, protections, result, latency_ms):
+    def record_attempt(self, username, protections, result, latency_ms):
         self.results.append({
             'timestamp': time.time(),
             'group_seed': GROUP_SEED,
             'username': username,
-            'hash_mode': protections.get('hash_mode', None),
+            'hash_mode': protections.get('hash_mode', False),
             'rate_limiting': protections.get('rate_limiting', False),
             'lockout': protections.get('lockout', False),
             'captcha': protections.get('captcha', False),
-            'totp': TOTP,
+            'totp': protections.get('totp', False),
             'result': result,
             'latency_ms': latency_ms
         })

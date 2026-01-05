@@ -104,7 +104,7 @@ class Attempt:
             logging.info(f"login failed for unauthorized user via Password Spraying for all {len(self.unauthorized_user.list_of_usernames)} users")
 
 
-a = Attempt(TOTP=True)
+a = Attempt()
 a.password_spraying()
 a.metrics.save_to_csv("attempts.csv")
 # a.brute_force("taylor") # easy password with lockout fails after 10 passwords
