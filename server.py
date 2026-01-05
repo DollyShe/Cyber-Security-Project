@@ -26,7 +26,7 @@ class LoginResult(Enum):
 
 class Server:
     # Server-side pepper (should be stored securely, e.g., environment variable)
-    PEPPER = os.environ.get("PASSWORD_PEPPER", "S3cr3tP3pp3r!@#$%^&*()")
+    PEPPER = os.environ.get("PASSWORD_PEPPER", "S3cr3tP3pp3r!@#$%^&*()") # check this
 
     def __init__(self, TOTP: bool = False, RL: bool = False, lockout: bool = False,
                  sha256_salt: bool = False, bcrypt_hash: bool = False, argon2_hash: bool = False,

@@ -1,5 +1,5 @@
 import pandas as pd
-import time
+from datetime import datetime
 from Config import *
 
 class MetricsCollector:
@@ -8,7 +8,7 @@ class MetricsCollector:
     
     def record_attempt(self, username, protections, result, latency_ms):
         self.results.append({
-            'timestamp': time.time(),
+            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S,%f")[:-3],
             'group_seed': GROUP_SEED,
             'username': username,
             'hash_mode': protections.get('hash_mode', False),
@@ -26,9 +26,16 @@ class MetricsCollector:
     
     def get_stats(self):
         df = pd.DataFrame(self.results)
-        return {
-            'total_attempts': len(df),
-            'success_rate': (df['result'] == 'OK').mean(),
-            'avg_latency_ms': df['latency_ms'].mean(),
-            'attempts_per_sec': len(df) / (df['timestamp'].max() - df['timestamp'].min())
-        }
+
+        # Convert string timestamps → datetime
+        df['timestamp'] = pd.to_datetime(
+            df['timestamp'],
+            format="%Y-%m-%d %H:%M:%S,%f"
+        )
+        duration_sec = (df['timestamp'].max() - df['timestamp'].min()).total_seconds()
+        stats = "========== Overall Statistics ==========\n"
+        stats += f"total_attempts: {len(df)}\n"
+        stats += f"success_rate: {(df['result'] == 'OK').mean()}\n"
+        stats += f"avg_latency_ms: {df['latency_ms'].mean()}\n"
+        stats += f"attempts_per_sec: {len(df) / duration_sec if duration_sec > 0 else 0}"
+        return stats

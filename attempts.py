@@ -73,11 +73,11 @@ class Attempt:
             start = time.perf_counter()
             result = self.server.login(username, password)
             latency_ms = (time.perf_counter() - start) * 1000
-            self.metrics.record_attempt(username, self.server.protections, result, latency_ms)
+            self.metrics.record_attempt(username, self.server.protections, result.value, latency_ms)
             if result == LoginResult.OK:
                 logging.info(f"[OK] LOGIN_SUCCESS user={username}")
                 return
-            logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
+            logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result.value}")
         
     def password_spraying(self):
         with open("PS_passwords.txt", "r") as file:
@@ -92,12 +92,12 @@ class Attempt:
                 start = time.perf_counter()
                 result = self.server.login(username, password)
                 latency_ms = (time.perf_counter() - start) * 1000
-                self.metrics.record_attempt(username, self.server.protections, result, latency_ms)
+                self.metrics.record_attempt(username, self.server.protections, result.value, latency_ms)
                 if result == LoginResult.OK:
                     hacked_users.append(username)
                     logging.info(f"[OK] LOGIN_SUCCESS user={username}")
-                    break
-                logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result}")
+                    continue
+                logging.warning(f"[FAIL] LOGIN_FAIL user={username} due to {result.value}")
         if len(hacked_users) > 0:
             logging.info(f"login succeeded for unauthorized user via Password Spraying for {len(hacked_users)} users over {len(self.unauthorized_user.list_of_usernames)}")
         else:
@@ -105,7 +105,29 @@ class Attempt:
 
 
 a = Attempt()
+# a = Attempt(TOTP=True)
+# a = Attempt(RL=True)
+# a = Attempt(lockout=True)
+# a = Attempt(captcha=True)
+# a = Attempt(sha256_salt=True)
+# a = Attempt(bcrypt_hash=True)
+# a = Attempt(argon2_hash=True)
+
+# Mix:
+# a = Attempt(argon2_hash=True, pepper=True)
+# a = Attempt(bcrypt_hash=True, RL=True)
+# a = Attempt(sha256_salt=True, pepper=True)
+# a = Attempt(argon2_hash=True, lockout=True)
+
 a.password_spraying()
+
+# a.brute_force("taylor") # easy password with lockout fails after 10 passwords with TOTP
+# a.brute_force("sam") # easy password NO TOTP
+# a.brute_force("ava") # Medium password
+# a.brute_force("sophie") # Medium password
+# a.brute_force("daniel") # Strong password
+# a.brute_force("bluebird") # Strong password
+
 a.metrics.save_to_csv("attempts.csv")
-# a.brute_force("taylor") # easy password with lockout fails after 10 passwords
-# a.brute_force("morgan")
+with open("attempts.log", "a") as f:
+    f.write(a.metrics.get_stats())
