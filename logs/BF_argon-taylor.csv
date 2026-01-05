@@ -1,0 +1,15 @@
+timestamp,group_seed,username,hash_mode,pepper,rate_limiting,lockout,captcha,totp,result,latency_ms
+"2026-01-05 20:55:20,499",526338897,taylor,argon2,False,False,False,False,False,bad_password,32.0954998023808
+"2026-01-05 20:55:20,531",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.51659993454814
+"2026-01-05 20:55:20,566",526338897,taylor,argon2,False,False,False,False,False,bad_password,34.13289971649647
+"2026-01-05 20:55:20,598",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.512399669736624
+"2026-01-05 20:55:20,633",526338897,taylor,argon2,False,False,False,False,False,bad_password,34.30990036576986
+"2026-01-05 20:55:20,665",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.815300229936838
+"2026-01-05 20:55:20,697",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.47359983995557
+"2026-01-05 20:55:20,729",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.78759990260005
+"2026-01-05 20:55:20,760",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.369199976325035
+"2026-01-05 20:55:20,791",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.73809964209795
+"2026-01-05 20:55:20,826",526338897,taylor,argon2,False,False,False,False,False,bad_password,33.426899928599596
+"2026-01-05 20:55:20,867",526338897,taylor,argon2,False,False,False,False,False,bad_password,40.779899805784225
+"2026-01-05 20:55:20,900",526338897,taylor,argon2,False,False,False,False,False,bad_password,31.716200057417154
+"2026-01-05 20:55:20,930",526338897,taylor,argon2,False,False,False,False,False,ok,29.870299622416496

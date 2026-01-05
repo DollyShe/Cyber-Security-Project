@@ -26,7 +26,7 @@ class LoginResult(Enum):
 
 class Server:
     # Server-side pepper (should be stored securely, e.g., environment variable)
-    PEPPER = os.environ.get("PASSWORD_PEPPER", "S3cr3tP3pp3r!@#$%^&*()") # check this
+    PEPPER = os.environ.get("PASSWORD_PEPPER", "S3cr3tP3pp3r!@#$%^&*()")
 
     def __init__(self, TOTP: bool = False, RL: bool = False, lockout: bool = False,
                  sha256_salt: bool = False, bcrypt_hash: bool = False, argon2_hash: bool = False,
@@ -60,19 +60,18 @@ class Server:
                 parallelism=PARALLELISM    # Number of parallel threads
             )
 
+        # TOTP setup
+        if TOTP:
+            self.add_totp()
+        else:
+            self.remove_totp()
+        self.save()
+        self.totp_challenges = {}
+
         # Hash passwords if hashing is enabled and passwords are plain text
         if self.hashing:
             self._hash_passwords_if_needed()
             self.save_hashed_passwords()
-
-        # TOTP setup
-        if TOTP:
-            self.add_totp()
-            self.save()
-        else:
-            self.remove_totp()
-            self.save()
-        self.totp_challenges = {}
 
         # Rate limiting setup
         if RL:

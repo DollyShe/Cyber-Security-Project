@@ -12,6 +12,7 @@ class MetricsCollector:
             'group_seed': GROUP_SEED,
             'username': username,
             'hash_mode': protections.get('hash_mode', False),
+            'pepper': protections.get('pepper', False),
             'rate_limiting': protections.get('rate_limiting', False),
             'lockout': protections.get('lockout', False),
             'captcha': protections.get('captcha', False),
@@ -35,7 +36,7 @@ class MetricsCollector:
         duration_sec = (df['timestamp'].max() - df['timestamp'].min()).total_seconds()
         stats = "==================== Overall Statistics ====================\n"
         stats += f"total_attempts: {len(df)}\n"
-        stats += f"success_rate: {(df['result'] == 'ok').mean()}\n"
-        stats += f"avg_latency_ms: {df['latency_ms'].mean()}\n"
+        stats += f"success_rate: {((df['result'] == 'ok').mean() * 100):.2f}%\n"
+        stats += f"avg_latency_ms: {df['latency_ms'].mean():.4f}\n"
         stats += f"attempts_per_sec: {len(df) / duration_sec if duration_sec > 0 else 0}"
         return stats

@@ -27,4 +27,5 @@ The last group uses passwords like Gk9!pA42v@L and Mx@91_vT7s*.
 These are considered strong because they look random and include upper and lowercase letters, numbers, and special symbols.
 They don’t follow a clear pattern, which makes them much harder to crack.
 
-We randomly chose two users from each category, and added a TOTP secret to them
+We randomly chose two users from each category, and added a TOTP secret to them:
+alex and taylor with weak passwords, jules and sophie with medium passwords, gamer01 and bluebird with strong passwords

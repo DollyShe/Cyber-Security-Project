@@ -1,0 +1,34 @@
+2026-01-05 20:10:50,027 [INFO] Program started - 526338897
+2026-01-05 20:10:50,042 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,042 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,042 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,042 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,042 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,042 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,042 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,042 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,043 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,043 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,044 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,044 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,044 [WARNING] [FAIL] LOGIN_FAIL user=taylor due to bad_password
+2026-01-05 20:10:50,044 [INFO] -> LOGIN_ATTEMPT user=taylor
+2026-01-05 20:10:50,044 [INFO] [OK] LOGIN_SUCCESS user=taylor
+==================== Overall Statistics ====================
+total_attempts: 14
+success_rate: 7.14%
+avg_latency_ms: 0.0042
+attempts_per_sec: 7000.0

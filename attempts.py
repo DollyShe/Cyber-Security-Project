@@ -110,7 +110,7 @@ class Attempt:
             f.write(stats)
             print(stats)
 
-a = Attempt()
+# a = Attempt()
 # a = Attempt(TOTP=True)
 # a = Attempt(RL=True)
 # a = Attempt(lockout=True)
@@ -120,18 +120,15 @@ a = Attempt()
 # a = Attempt(argon2_hash=True)
 
 # Mix:
-# a = Attempt(argon2_hash=True, pepper=True)
-# a = Attempt(bcrypt_hash=True, RL=True)
+# a = Attempt(argon2_hash=True, pepper=True) # doesn't show anything interesting
+a = Attempt(bcrypt_hash=True, RL=True)
 # a = Attempt(sha256_salt=True, pepper=True)
 # a = Attempt(argon2_hash=True, lockout=True)
 
-a.password_spraying()
+# a.password_spraying()
 
 # a.brute_force("taylor") # easy password with lockout fails after 10 passwords with TOTP
-# a.brute_force("sam") # easy password NO TOTP
-# a.brute_force("ava") # Medium password
-# a.brute_force("sophie") # Medium password
-# a.brute_force("daniel") # Strong password
-# a.brute_force("bluebird") # Strong password
+# a.brute_force("max") # Medium password
+a.brute_force("daniel") # Strong password
 
 a.add_stats()
