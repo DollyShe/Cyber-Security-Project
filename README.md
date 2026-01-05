@@ -1,6 +1,7 @@
 # Cyber-Security-Project
+The purpose of this project is to test how different methods for storing passwords and user authentication perform against brute-force and password-spray attacks, and to analyze the additional benefits of secondary protection measures such as rate limiting, account locking, CAPTCHA and TOTP.
 
-# the GROUP_SEED is the following:
+# The GROUP_SEED is the following:
 GROUP_SEED = 526338897
 
 
