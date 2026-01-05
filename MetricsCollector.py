@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from Config import *
+from config import *
 
 class MetricsCollector:
     def __init__(self):
@@ -33,9 +33,9 @@ class MetricsCollector:
             format="%Y-%m-%d %H:%M:%S,%f"
         )
         duration_sec = (df['timestamp'].max() - df['timestamp'].min()).total_seconds()
-        stats = "========== Overall Statistics ==========\n"
+        stats = "==================== Overall Statistics ====================\n"
         stats += f"total_attempts: {len(df)}\n"
-        stats += f"success_rate: {(df['result'] == 'OK').mean()}\n"
+        stats += f"success_rate: {(df['result'] == 'ok').mean()}\n"
         stats += f"avg_latency_ms: {df['latency_ms'].mean()}\n"
         stats += f"attempts_per_sec: {len(df) / duration_sec if duration_sec > 0 else 0}"
         return stats

@@ -1,5 +1,5 @@
-from Server import *
-from User import *
+from server import *
+from user import *
 import random
 import logging
 import secrets
@@ -103,6 +103,12 @@ class Attempt:
         else:
             logging.info(f"login failed for unauthorized user via Password Spraying for all {len(self.unauthorized_user.list_of_usernames)} users")
 
+    def add_stats(self):
+        a.metrics.save_to_csv("attempts.csv")
+        with open("attempts.log", "a") as f:
+            stats = a.metrics.get_stats()
+            f.write(stats)
+            print(stats)
 
 a = Attempt()
 # a = Attempt(TOTP=True)
@@ -128,6 +134,4 @@ a.password_spraying()
 # a.brute_force("daniel") # Strong password
 # a.brute_force("bluebird") # Strong password
 
-a.metrics.save_to_csv("attempts.csv")
-with open("attempts.log", "a") as f:
-    f.write(a.metrics.get_stats())
+a.add_stats()
