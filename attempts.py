@@ -121,14 +121,14 @@ class Attempt:
 
 # Mix:
 # a = Attempt(argon2_hash=True, pepper=True) # doesn't show anything interesting
-a = Attempt(bcrypt_hash=True, RL=True)
+# a = Attempt(bcrypt_hash=True, RL=True)
 # a = Attempt(sha256_salt=True, pepper=True)
-# a = Attempt(argon2_hash=True, lockout=True)
+a = Attempt(argon2_hash=True, lockout=True)
 
 # a.password_spraying()
 
-# a.brute_force("taylor") # easy password with lockout fails after 10 passwords with TOTP
+a.brute_force("taylor") # easy password with lockout fails after 10 passwords with TOTP
 # a.brute_force("max") # Medium password
-a.brute_force("daniel") # Strong password
+# a.brute_force("daniel") # Strong password
 
 a.add_stats()
